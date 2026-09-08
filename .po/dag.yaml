@@ -3,11 +3,11 @@ scope: Core oficial + qualidade; extensões adiadas
 tickets:
 - id: KORP-001
   title: Bootstrap, governança e arquitetura
-  status: in_review
+  status: done
   depends_on: []
 - id: KORP-002
   title: Serviço HTTP obrigatório em Go
-  status: planned
+  status: in_review
   depends_on:
   - KORP-001
 - id: KORP-003

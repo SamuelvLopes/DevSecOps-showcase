@@ -1,6 +1,6 @@
 # KORP-001 — Bootstrap, governança e arquitetura
 
-Status: in_review. Risco: baixo. Dependências: nenhuma.
+Status: done. Risco: baixo. Dependências: nenhuma.
 
 ## Objetivo e escopo
 
