@@ -66,3 +66,15 @@ jobs:
 
       - name: Run load observability
         run: make compose-load
+
+  compose-recovery:
+    name: Compose recovery demo
+    runs-on: ubuntu-24.04
+    needs:
+      - compose-smoke
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run recovery demo
+        run: make compose-recovery

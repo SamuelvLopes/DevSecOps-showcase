@@ -98,13 +98,13 @@ tickets:
   - KORP-018
 - id: KORP-022
   title: k6 e observabilidade sob carga
-  status: in_review
+  status: done
   depends_on:
   - KORP-009
   - KORP-017
 - id: KORP-034
   title: Failure injection / recovery demo
-  status: planned
+  status: in_review
   depends_on:
   - KORP-013
   - KORP-017
