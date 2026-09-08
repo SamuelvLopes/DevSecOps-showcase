@@ -78,4 +78,6 @@ Grafana ao final da execução.
 
 Uma branch e uma PR por ticket, commits rastreáveis e verificações registradas.
 Cada ticket registra critérios de aceite e resultados de verificação.
+Pull requests para `develop` e `main` executam CI com testes Go, build Docker e
+validação Compose.
 Kubernetes e cloud são extensões futuras e não condicionam a entrega Compose/Ansible.
