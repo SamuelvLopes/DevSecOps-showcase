@@ -1,6 +1,6 @@
 # KORP-008 — Prometheus
 
-Status: in_review. Risco: médio. Depende de KORP-004 e KORP-006.
+Status: done. Risco: médio. Depende de KORP-004 e KORP-006.
 
 ## Objetivo
 
@@ -41,3 +41,4 @@ removidos apenas manualmente.
 - `docker inspect prometheus`: `9090/tcp` publicado em `127.0.0.1:9090`,
   configuração montada read-only e volume `devsecops_prometheus-data`.
 - `make compose-down`: containers e rede removidos, preservando volume.
+- [PR #8](https://github.com/SamuelvLopes/DevSecOps-showcase/pull/8) mesclada em develop.

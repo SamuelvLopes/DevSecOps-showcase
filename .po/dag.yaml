@@ -37,13 +37,13 @@ tickets:
   - KORP-006
 - id: KORP-008
   title: Prometheus
-  status: in_review
+  status: done
   depends_on:
   - KORP-004
   - KORP-006
 - id: KORP-009
   title: Grafana provisionado
-  status: planned
+  status: in_review
   depends_on:
   - KORP-008
 - id: KORP-011
