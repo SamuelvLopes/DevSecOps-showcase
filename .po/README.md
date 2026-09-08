@@ -18,3 +18,4 @@ aceite atendidos, verificação registrada e revisão da mudança.
 - [KORP-009 — Grafana provisionado](tickets/KORP-009.md)
 - [KORP-011 — Estrutura Ansible](tickets/KORP-011.md)
 - [KORP-012 — Provisionamento Ansible](tickets/KORP-012.md)
+- [KORP-013 — Validação Ansible](tickets/KORP-013.md)

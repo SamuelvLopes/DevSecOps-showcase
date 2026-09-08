@@ -51,8 +51,4 @@
   ansible.builtin.command:
     cmd: docker compose -f "{{ korp_compose_file }}" up --build -d
   register: korp_compose_up
-  changed_when: >-
-    'Started' in korp_compose_up.stdout or
-    'Created' in korp_compose_up.stdout or
-    'Built' in korp_compose_up.stdout or
-    'Recreated' in korp_compose_up.stdout
+  changed_when: false

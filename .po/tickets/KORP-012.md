@@ -1,6 +1,6 @@
 # KORP-012 — Provisionamento total por Ansible
 
-Status: in_review. Risco: alto. Depende de KORP-011.
+Status: done. Risco: alto. Depende de KORP-011.
 
 ## Objetivo
 
@@ -37,3 +37,4 @@ alvo ou revert do ticket.
 - PyYAML: `site.yml`, `requirements.yml`, `group_vars/korp.yml` e tasks das
   roles carregaram sem erro.
 - Execução em VM limpa: pendente para KORP-013.
+- [PR #11](https://github.com/SamuelvLopes/DevSecOps-showcase/pull/11) mesclada em develop.
