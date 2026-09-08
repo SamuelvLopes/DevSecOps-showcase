@@ -23,6 +23,36 @@ wait_url() {
   curl -fsS "$url" >/dev/null
 }
 
+wait_prometheus_target_up() {
+  retries="$1"
+  delay="$2"
+  i=1
+  while [ "$i" -le "$retries" ]; do
+    curl -fsS "http://127.0.0.1:9090/api/v1/targets?state=active" > "$tmp_dir/targets.json"
+    if python3 - "$tmp_dir/targets.json" <<'PY'
+import json
+import sys
+
+with open(sys.argv[1], encoding="utf-8") as fh:
+    payload = json.load(fh)
+
+targets = payload["data"]["activeTargets"]
+matches = [
+    target for target in targets
+    if target["labels"].get("job") == "http-server-projeto-korp"
+    and target["health"] == "up"
+]
+raise SystemExit(0 if matches else 1)
+PY
+    then
+      return 0
+    fi
+    sleep "$delay"
+    i=$((i + 1))
+  done
+  return 1
+}
+
 trap cleanup EXIT INT TERM
 
 docker compose down --remove-orphans >/dev/null 2>&1 || true
@@ -50,25 +80,7 @@ if not re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", payload["horario"])
 print(json.dumps(payload, ensure_ascii=False, sort_keys=True))
 PY
 
-sleep 16
-
-curl -fsS "http://127.0.0.1:9090/api/v1/targets?state=active" > "$tmp_dir/targets.json"
-python3 - "$tmp_dir/targets.json" <<'PY'
-import json
-import sys
-
-with open(sys.argv[1], encoding="utf-8") as fh:
-    payload = json.load(fh)
-
-targets = payload["data"]["activeTargets"]
-matches = [
-    target for target in targets
-    if target["labels"].get("job") == "http-server-projeto-korp"
-    and target["health"] == "up"
-]
-if not matches:
-    raise SystemExit("Prometheus target is not up")
-PY
+wait_prometheus_target_up 12 5
 
 curl -fsS "http://127.0.0.1:9090/api/v1/query?query=projeto_korp_up" > "$tmp_dir/up.json"
 python3 - "$tmp_dir/up.json" <<'PY'
