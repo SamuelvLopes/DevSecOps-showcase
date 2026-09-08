@@ -1,6 +1,6 @@
 # KORP-011 — Estrutura Ansible
 
-Status: in_review. Risco: médio. Depende de KORP-007 e KORP-009.
+Status: done. Risco: médio. Depende de KORP-007 e KORP-009.
 
 ## Objetivo
 
@@ -36,3 +36,4 @@ Recuperação por revert do ticket.
 - PyYAML: `site.yml`, `requirements.yml`, `group_vars/korp.yml` e tasks das
   roles carregaram sem erro.
 - `ansible-playbook --version`: indisponível no PATH local nesta etapa.
+- [PR #10](https://github.com/SamuelvLopes/DevSecOps-showcase/pull/10) mesclada em develop.

@@ -4,8 +4,26 @@ korp_compose_file: "{{ korp_project_dir }}/compose.yaml"
 korp_http_url: http://localhost/projeto-korp
 korp_prometheus_url: http://127.0.0.1:9090
 korp_grafana_url: http://127.0.0.1:3000
+korp_docker_apt_keyring: /etc/apt/keyrings/docker.asc
+korp_docker_arch_map:
+  x86_64: amd64
+  aarch64: arm64
+  armv7l: armhf
+korp_docker_arch: >-
+  {{ korp_docker_arch_map.get(ansible_facts.architecture,
+  ansible_facts.architecture) }}
+korp_docker_apt_repo: >-
+  deb [arch={{ korp_docker_arch }} signed-by={{ korp_docker_apt_keyring }}]
+  https://download.docker.com/linux/{{ ansible_facts.distribution | lower }}
+  {{ ansible_facts.distribution_release }} stable
 korp_packages:
   - ca-certificates
   - curl
   - gnupg
   - lsb-release
+korp_docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin

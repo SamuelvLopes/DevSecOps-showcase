@@ -1,4 +1,58 @@
 ---
-- name: Stack role placeholder
-  ansible.builtin.debug:
-    msg: Source deployment and Compose convergence are implemented in KORP-012.
+- name: Ensure project directory exists
+  ansible.builtin.file:
+    path: "{{ korp_project_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Copy Compose file
+  ansible.builtin.copy:
+    src: "{{ korp_repo_src }}/compose.yaml"
+    dest: "{{ korp_project_dir }}/compose.yaml"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Copy application source
+  ansible.builtin.copy:
+    src: "{{ korp_repo_src }}/app"
+    dest: "{{ korp_project_dir }}/"
+    owner: root
+    group: root
+    mode: preserve
+
+- name: Copy NGINX configuration
+  ansible.builtin.copy:
+    src: "{{ korp_repo_src }}/nginx"
+    dest: "{{ korp_project_dir }}/"
+    owner: root
+    group: root
+    mode: preserve
+
+- name: Copy Prometheus configuration
+  ansible.builtin.copy:
+    src: "{{ korp_repo_src }}/prometheus"
+    dest: "{{ korp_project_dir }}/"
+    owner: root
+    group: root
+    mode: preserve
+
+- name: Copy Grafana provisioning
+  ansible.builtin.copy:
+    src: "{{ korp_repo_src }}/grafana"
+    dest: "{{ korp_project_dir }}/"
+    owner: root
+    group: root
+    mode: preserve
+
+- name: Converge Compose stack
+  ansible.builtin.command:
+    cmd: docker compose -f "{{ korp_compose_file }}" up --build -d
+  register: korp_compose_up
+  changed_when: >-
+    'Started' in korp_compose_up.stdout or
+    'Created' in korp_compose_up.stdout or
+    'Built' in korp_compose_up.stdout or
+    'Recreated' in korp_compose_up.stdout
