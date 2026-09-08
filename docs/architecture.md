@@ -19,6 +19,7 @@ para leitura em /etc/nginx/conf.d/ e resolverá a aplicação pelo DNS Docker.
 Prometheus e Grafana terão acesso administrativo via loopback da VM, com túnel
 SSH documentado para acesso pelo navegador do controlador. A senha Grafana será
 gerada uma vez, persistida fora do Git e reutilizada pelo provisionamento.
+Prometheus coleta `/metrics` em `app:8080` pelo DNS da rede Docker.
 
 ## Fronteiras e operação
 

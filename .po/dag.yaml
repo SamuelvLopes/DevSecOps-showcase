@@ -32,12 +32,12 @@ tickets:
   - KORP-005
 - id: KORP-007
   title: NGINX reverse proxy
-  status: in_review
+  status: done
   depends_on:
   - KORP-006
 - id: KORP-008
   title: Prometheus
-  status: planned
+  status: in_review
   depends_on:
   - KORP-004
   - KORP-006
