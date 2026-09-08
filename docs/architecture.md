@@ -35,6 +35,8 @@ gerada uma vez, persistida fora do Git e reutilizada pelo provisionamento.
   resposta do processo com HTTP 204; readiness separado exige semântica distinta.
 - A aplicação define timeouts HTTP explícitos e trata SIGINT/SIGTERM para
   encerramento gracioso.
+- A aplicação expõe `/metrics` em texto Prometheus com disponibilidade e volume
+  de requisições. Labels de rota são controladas para evitar cardinalidade alta.
 - Disponibilidade de scrape e disponibilidade pelo proxy são sinais distintos.
   O dashboard não deve apresentar scrape UP como prova de todo o caminho.
 - Estado persistente: dados de Prometheus/Grafana e credencial local. Cleanup

@@ -10,3 +10,4 @@ aceite atendidos, verificação registrada e revisão da mudança.
 - [KORP-001 — Estrutura e arquitetura](tickets/KORP-001.md)
 - [KORP-002 — Serviço HTTP](tickets/KORP-002.md)
 - [KORP-003 — Operabilidade da aplicação](tickets/KORP-003.md)
+- [KORP-004 — Métricas Prometheus](tickets/KORP-004.md)
