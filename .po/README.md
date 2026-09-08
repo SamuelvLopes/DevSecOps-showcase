@@ -1,0 +1,11 @@
+# Tickets
+
+O [DAG](dag.yaml) registra o escopo da entrega, as dependências e o estado de cada
+ticket. Os identificadores permanecem estáveis; lacunas na numeração correspondem
+a itens fora desta entrega.
+
+Estados: planned, in_progress, in_review e done. A conclusão exige critérios de
+aceite atendidos, verificação registrada e revisão da mudança.
+
+- [KORP-001 — Estrutura e arquitetura](tickets/KORP-001.md)
+- [KORP-002 — Serviço HTTP](tickets/KORP-002.md)
