@@ -93,12 +93,12 @@ tickets:
   - KORP-009
 - id: KORP-019
   title: Security code review e PR checklist
-  status: in_review
+  status: done
   depends_on:
   - KORP-018
 - id: KORP-022
   title: k6 e observabilidade sob carga
-  status: planned
+  status: in_review
   depends_on:
   - KORP-009
   - KORP-017
