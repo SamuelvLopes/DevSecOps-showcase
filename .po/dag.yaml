@@ -69,13 +69,13 @@ tickets:
   - KORP-002
 - id: KORP-015
   title: DevSecOps security gates
-  status: in_review
+  status: done
   depends_on:
   - KORP-014
   - KORP-005
 - id: KORP-016
   title: Dependabot e governance GitHub
-  status: planned
+  status: in_review
   depends_on:
   - KORP-014
 - id: KORP-017
