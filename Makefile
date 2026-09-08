@@ -1,8 +1,8 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help check docker-build test
+.PHONY: help check compose-config compose-down compose-up docker-build test
 help:
-	@printf '%s\n' 'Projeto Korp' '  make test          Executa testes Go com race detector.' '  make check         Executa formatação, vet, testes e whitespace.' '  make docker-build  Constrói a imagem da aplicação.'
+	@printf '%s\n' 'Projeto Korp' '  make test            Executa testes Go com race detector.' '  make check           Executa formatação, vet, testes e whitespace.' '  make docker-build    Constrói a imagem da aplicação.' '  make compose-config  Valida compose.yaml.' '  make compose-up      Sobe a stack local.' '  make compose-down    Remove a stack local.'
 
 test:
 	cd app && go test -race -cover ./...
@@ -16,3 +16,12 @@ check:
 
 docker-build:
 	docker build -t http-server-projeto-korp:local app
+
+compose-config:
+	docker compose config --quiet
+
+compose-up:
+	docker compose up --build -d
+
+compose-down:
+	docker compose down --remove-orphans

@@ -12,3 +12,4 @@ aceite atendidos, verificação registrada e revisão da mudança.
 - [KORP-003 — Operabilidade da aplicação](tickets/KORP-003.md)
 - [KORP-004 — Métricas Prometheus](tickets/KORP-004.md)
 - [KORP-005 — Dockerfile](tickets/KORP-005.md)
+- [KORP-006 — Docker Compose](tickets/KORP-006.md)

@@ -22,12 +22,12 @@ tickets:
   - KORP-003
 - id: KORP-005
   title: Dockerfile multi-stage e hardening da imagem
-  status: in_review
+  status: done
   depends_on:
   - KORP-004
 - id: KORP-006
   title: Docker Compose e runtime hardening
-  status: planned
+  status: in_review
   depends_on:
   - KORP-005
 - id: KORP-007

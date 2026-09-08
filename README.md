@@ -57,10 +57,15 @@ make test
 make help
 make check
 make docker-build
+make compose-up
+make compose-down
 ```
 
 Requer Go 1.24 ou superior, Git e GNU Make. Testes de infraestrutura serão
 adicionados junto aos componentes correspondentes.
+
+O Compose cria a rede bridge `projeto-korp` e mantém a aplicação sem porta
+publicada no host. A exposição HTTP pública será feita pelo NGINX.
 
 ## Processo
 

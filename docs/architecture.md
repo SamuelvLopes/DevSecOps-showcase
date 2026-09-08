@@ -15,8 +15,6 @@ Cliente --> host:80 --> NGINX:80 --> http-server-projeto-korp:8080
 Os quatro serviços usarão uma rede Docker bridge explícita. A aplicação não
 publicará porta no host. NGINX terá configuração versionada montada somente
 para leitura em /etc/nginx/conf.d/ e resolverá a aplicação pelo DNS Docker.
-O Ansible gerenciará a rede; o Compose a referenciará como externa. O quick
-start manual deverá criar a mesma rede antes de iniciar o Compose.
 
 Prometheus e Grafana terão acesso administrativo via loopback da VM, com túnel
 SSH documentado para acesso pelo navegador do controlador. A senha Grafana será
