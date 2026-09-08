@@ -30,6 +30,7 @@ cd app
 go run ./cmd/http-server-projeto-korp
 curl http://localhost:8080/projeto-korp
 curl -i http://localhost:8080/health
+curl http://localhost:8080/metrics
 ```
 
 O endereço padrão é `:8080`; `HTTP_ADDRESS=:18080` permite usar outra porta em
@@ -45,6 +46,9 @@ O valor de `horario` corresponde ao instante da requisição em UTC.
 
 `GET /health` retorna HTTP 204 e não possui corpo. O processo trata SIGINT e
 SIGTERM com encerramento gracioso.
+
+`GET /metrics` expõe métricas Prometheus para disponibilidade e volume de
+requisições HTTP.
 
 ## Verificação
 

@@ -1,6 +1,6 @@
 # KORP-003 — Operabilidade da aplicação
 
-Status: in_review. Risco: baixo. Depende de KORP-002.
+Status: done. Risco: baixo. Depende de KORP-002.
 
 ## Objetivo
 
@@ -36,3 +36,4 @@ expõe detalhes internos. Recuperação por revert do ticket.
 - `GET /projeto-korp`: HTTP 200 e JSON com horário UTC atual.
 - `GET /health`: HTTP 204 sem corpo.
 - `SIGTERM`: log de shutdown emitido e processo encerrado sem erro.
+- [PR #3](https://github.com/SamuelvLopes/DevSecOps-showcase/pull/3) mesclada em develop.

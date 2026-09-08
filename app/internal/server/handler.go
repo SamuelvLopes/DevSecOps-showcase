@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 	"time"
+
+	"github.com/SamuelvLopes/DevSecOps-showcase/app/internal/metrics"
 )
 
 const (
@@ -24,7 +26,9 @@ func NewHandler() http.Handler {
 }
 
 func newHandler(now clock) http.Handler {
+	collector := metrics.NewCollector()
 	mux := http.NewServeMux()
+	mux.Handle(metrics.MetricsPath, collector.Handler())
 	mux.HandleFunc(healthPath, func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			w.Header().Set("Allow", http.MethodGet)
@@ -53,5 +57,5 @@ func newHandler(now clock) http.Handler {
 		}
 	})
 
-	return mux
+	return collector.Middleware(mux)
 }
