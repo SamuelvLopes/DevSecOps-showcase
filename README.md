@@ -20,6 +20,7 @@ Essas capacidades são planejadas, ainda não comprovadas nesta etapa.
 - [Requisitos e critérios de aceite](docs/requirements.md)
 - [Arquitetura e limites](docs/architecture.md)
 - [Threat model STRIDE](docs/threat-model.md)
+- [Security review](docs/security-review.md)
 - [Decisões técnicas](docs/decisions/ADR-001-compose-core.md)
 - [Governança GitHub](docs/github-governance.md)
 - [Tickets e dependências](.po/README.md)

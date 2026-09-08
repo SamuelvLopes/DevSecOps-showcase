@@ -87,13 +87,13 @@ tickets:
   - KORP-014
 - id: KORP-018
   title: Threat Modeling STRIDE
-  status: in_review
+  status: done
   depends_on:
   - KORP-007
   - KORP-009
 - id: KORP-019
   title: Security code review e PR checklist
-  status: planned
+  status: in_review
   depends_on:
   - KORP-018
 - id: KORP-022

@@ -55,3 +55,4 @@ na rede Docker, Prometheus coleta `/metrics` e Grafana lê Prometheus.
 - `make check`
 - `make compose-smoke`
 - GitHub Actions: CI, security gates e GitGuardian
+- [Security review](security-review.md)

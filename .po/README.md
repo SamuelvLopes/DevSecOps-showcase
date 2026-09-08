@@ -24,3 +24,4 @@ aceite atendidos, verificação registrada e revisão da mudança.
 - [KORP-016 — Dependabot e governança](tickets/KORP-016.md)
 - [KORP-017 — Smoke test Compose](tickets/KORP-017.md)
 - [KORP-018 — Threat model STRIDE](tickets/KORP-018.md)
+- [KORP-019 — Security code review](tickets/KORP-019.md)
