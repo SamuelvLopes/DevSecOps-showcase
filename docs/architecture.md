@@ -37,6 +37,7 @@ gerada uma vez, persistida fora do Git e reutilizada pelo provisionamento.
   encerramento gracioso.
 - A aplicação expõe `/metrics` em texto Prometheus com disponibilidade e volume
   de requisições. Labels de rota são controladas para evitar cardinalidade alta.
+- A imagem da aplicação é construída em multi-stage e roda como usuário não-root.
 - Disponibilidade de scrape e disponibilidade pelo proxy são sinais distintos.
   O dashboard não deve apresentar scrape UP como prova de todo o caminho.
 - Estado persistente: dados de Prometheus/Grafana e credencial local. Cleanup

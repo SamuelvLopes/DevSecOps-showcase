@@ -17,12 +17,12 @@ tickets:
   - KORP-002
 - id: KORP-004
   title: Métricas Prometheus da aplicação
-  status: in_review
+  status: done
   depends_on:
   - KORP-003
 - id: KORP-005
   title: Dockerfile multi-stage e hardening da imagem
-  status: planned
+  status: in_review
   depends_on:
   - KORP-004
 - id: KORP-006
