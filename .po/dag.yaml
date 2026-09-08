@@ -104,13 +104,13 @@ tickets:
   - KORP-017
 - id: KORP-034
   title: Failure injection / recovery demo
-  status: in_review
+  status: done
   depends_on:
   - KORP-013
   - KORP-017
 - id: KORP-035
   title: README, ADRs e runbook finais
-  status: planned
+  status: in_review
   depends_on:
   - KORP-013
   - KORP-015
