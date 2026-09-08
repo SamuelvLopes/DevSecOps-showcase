@@ -6,7 +6,10 @@ import (
 	"time"
 )
 
-const projectPath = "/projeto-korp"
+const (
+	healthPath  = "/health"
+	projectPath = "/projeto-korp"
+)
 
 type clock func() time.Time
 
@@ -22,6 +25,16 @@ func NewHandler() http.Handler {
 
 func newHandler(now clock) http.Handler {
 	mux := http.NewServeMux()
+	mux.HandleFunc(healthPath, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			w.Header().Set("Allow", http.MethodGet)
+			http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
+			return
+		}
+
+		w.WriteHeader(http.StatusNoContent)
+	})
+
 	mux.HandleFunc(projectPath, func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			w.Header().Set("Allow", http.MethodGet)

@@ -3,7 +3,8 @@
 Implementação incremental do desafio técnico Korp: Go, Docker Compose, NGINX,
 Prometheus, Grafana e provisionamento Ansible em Linux.
 
-Status: serviço HTTP implementado; containerização e infraestrutura em desenvolvimento.
+Status: serviço HTTP implementado com operabilidade básica; containerização e
+infraestrutura em desenvolvimento.
 
 ## Entrega planejada
 
@@ -28,6 +29,7 @@ Essas capacidades são planejadas, ainda não comprovadas nesta etapa.
 cd app
 go run ./cmd/http-server-projeto-korp
 curl http://localhost:8080/projeto-korp
+curl -i http://localhost:8080/health
 ```
 
 O endereço padrão é `:8080`; `HTTP_ADDRESS=:18080` permite usar outra porta em
@@ -40,6 +42,9 @@ Resposta:
 ```
 
 O valor de `horario` corresponde ao instante da requisição em UTC.
+
+`GET /health` retorna HTTP 204 e não possui corpo. O processo trata SIGINT e
+SIGTERM com encerramento gracioso.
 
 ## Verificação
 
