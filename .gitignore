@@ -1,0 +1,21 @@
+# Local credentials and environments
+.env
+.env.*
+!.env.example
+.secrets/
+*.pem
+*.key
+*.tfstate
+*.tfstate.*
+.terraform/
+ansible/inventory/hosts.yml
+ansible/secrets.yml
+
+# Build and local tooling
+bin/
+coverage.out
+coverage.html
+.venv/
+__pycache__/
+.cache/
+.DS_Store
