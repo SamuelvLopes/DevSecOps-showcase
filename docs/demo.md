@@ -19,6 +19,7 @@ Prometheus, Grafana, validações automatizadas, segurança e recuperação.
 5. Mostre os workflows no GitHub Actions.
 6. Feche com o runbook em `docs/runbook.md` e o threat model em
    `docs/threat-model.md`.
+7. Use `docs/technical-walkthrough.md` como apoio para perguntas técnicas.
 
 ## Comandos de evidência
 

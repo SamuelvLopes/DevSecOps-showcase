@@ -23,6 +23,7 @@ executa Compose e valida HTTP, Prometheus e Grafana.
 - [Security review](docs/security-review.md)
 - [Runbook](docs/runbook.md)
 - [Demo](docs/demo.md)
+- [Technical walkthrough](docs/technical-walkthrough.md)
 - [Teste de carga e observabilidade](scripts/load-observability.sh)
 - [Demo de recuperação](scripts/recovery-demo.sh)
 - [Validação de checkout limpo](scripts/clean-checkout-validation.sh)

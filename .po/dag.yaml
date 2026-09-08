@@ -126,12 +126,12 @@ tickets:
   - KORP-035
 - id: KORP-037
   title: Clean-room validation
-  status: in_review
+  status: done
   depends_on:
   - KORP-036
 - id: KORP-039
   title: Ensaio técnico/oral
-  status: planned
+  status: in_review
   depends_on:
   - KORP-037
 - id: KORP-040
