@@ -32,6 +32,7 @@ make compose-config
 make compose-smoke
 make compose-load
 make compose-recovery
+make demo
 ```
 
 O smoke sobe a stack, valida o contrato HTTP via NGINX, confirma Prometheus,
@@ -39,6 +40,7 @@ confirma Grafana e inspeciona as portas publicadas. O teste de carga usa k6 e
 confirma no Prometheus que o contador de requisições recebeu tráfego. A demo de
 recuperação derruba o serviço `app`, confirma indisponibilidade momentânea,
 recupera o serviço e valida saúde, métrica e contrato HTTP.
+`make demo` imprime um roteiro curto de evidências para apresentação.
 
 ## Observabilidade
 

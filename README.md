@@ -22,6 +22,7 @@ executa Compose e valida HTTP, Prometheus e Grafana.
 - [Threat model STRIDE](docs/threat-model.md)
 - [Security review](docs/security-review.md)
 - [Runbook](docs/runbook.md)
+- [Demo](docs/demo.md)
 - [Teste de carga e observabilidade](scripts/load-observability.sh)
 - [Demo de recuperação](scripts/recovery-demo.sh)
 - [Decisões técnicas](docs/decisions/ADR-001-compose-core.md)

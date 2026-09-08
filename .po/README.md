@@ -28,3 +28,4 @@ aceite atendidos, verificação registrada e revisão da mudança.
 - [KORP-022 — k6 e observabilidade](tickets/KORP-022.md)
 - [KORP-034 — Failure injection / recovery demo](tickets/KORP-034.md)
 - [KORP-035 — README, ADRs e runbook finais](tickets/KORP-035.md)
+- [KORP-036 — Demo script e evidências](tickets/KORP-036.md)
