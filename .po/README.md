@@ -14,3 +14,4 @@ aceite atendidos, verificação registrada e revisão da mudança.
 - [KORP-005 — Dockerfile](tickets/KORP-005.md)
 - [KORP-006 — Docker Compose](tickets/KORP-006.md)
 - [KORP-007 — NGINX reverse proxy](tickets/KORP-007.md)
+- [KORP-008 — Prometheus](tickets/KORP-008.md)

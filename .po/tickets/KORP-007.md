@@ -1,6 +1,6 @@
 # KORP-007 — NGINX reverse proxy
 
-Status: in_review. Risco: médio. Depende de KORP-006.
+Status: done. Risco: médio. Depende de KORP-006.
 
 ## Objetivo
 
@@ -40,3 +40,4 @@ rede Docker. Recuperação por `make compose-down` ou revert do ticket.
 - `docker inspect nginx`: `80/tcp` publicado em `0.0.0.0:80` e volume
   `/etc/nginx/conf.d` montado somente leitura.
 - `make compose-down`: containers e rede removidos.
+- [PR #7](https://github.com/SamuelvLopes/DevSecOps-showcase/pull/7) mesclada em develop.

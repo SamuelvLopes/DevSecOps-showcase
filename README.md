@@ -66,6 +66,7 @@ adicionados junto aos componentes correspondentes.
 
 O Compose cria a rede bridge `projeto-korp` e mantém a aplicação sem porta
 publicada no host. O NGINX publica `80:80` e encaminha para `app:8080`.
+Prometheus fica em `127.0.0.1:9090` para consulta local.
 
 ## Processo
 
