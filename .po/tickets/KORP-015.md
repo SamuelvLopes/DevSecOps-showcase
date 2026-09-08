@@ -1,6 +1,6 @@
 # KORP-015 — DevSecOps security gates
 
-Status: in_review. Risco: médio. Depende de KORP-014 e KORP-005.
+Status: done. Risco: médio. Depende de KORP-014 e KORP-005.
 
 ## Objetivo
 
@@ -40,4 +40,6 @@ ticket.
 - Trivy local encontrou vulnerabilidades HIGH na stdlib do binário construído
   com Go 1.24; builder atualizado para Go 1.27.
 - Trivy local na imagem reconstruída com Go 1.27: nenhum HIGH/CRITICAL corrigível.
-- Execução do GitHub Actions: pendente após abertura da PR.
+- GitHub Actions na PR #14: `Go vulnerability scan`, `Image vulnerability scan`,
+  `Go quality`, `Docker and Compose` e `GitGuardian Security Checks` passaram.
+- [PR #14](https://github.com/SamuelvLopes/DevSecOps-showcase/pull/14) mesclada em develop.
