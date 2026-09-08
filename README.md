@@ -22,6 +22,7 @@ Essas capacidades são planejadas, ainda não comprovadas nesta etapa.
 - [Threat model STRIDE](docs/threat-model.md)
 - [Security review](docs/security-review.md)
 - [Teste de carga e observabilidade](scripts/load-observability.sh)
+- [Demo de recuperação](scripts/recovery-demo.sh)
 - [Decisões técnicas](docs/decisions/ADR-001-compose-core.md)
 - [Governança GitHub](docs/github-governance.md)
 - [Tickets e dependências](.po/README.md)

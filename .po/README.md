@@ -26,3 +26,4 @@ aceite atendidos, verificação registrada e revisão da mudança.
 - [KORP-018 — Threat model STRIDE](tickets/KORP-018.md)
 - [KORP-019 — Security code review](tickets/KORP-019.md)
 - [KORP-022 — k6 e observabilidade](tickets/KORP-022.md)
+- [KORP-034 — Failure injection / recovery demo](tickets/KORP-034.md)
