@@ -20,3 +20,4 @@ aceite atendidos, verificação registrada e revisão da mudança.
 - [KORP-012 — Provisionamento Ansible](tickets/KORP-012.md)
 - [KORP-013 — Validação Ansible](tickets/KORP-013.md)
 - [KORP-014 — CI quality checks](tickets/KORP-014.md)
+- [KORP-015 — Security gates](tickets/KORP-015.md)

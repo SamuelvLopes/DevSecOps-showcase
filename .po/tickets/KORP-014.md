@@ -1,6 +1,6 @@
 # KORP-014 — CI Quality Checks
 
-Status: in_review. Risco: médio. Depende de KORP-002.
+Status: done. Risco: médio. Depende de KORP-002.
 
 ## Objetivo
 
@@ -33,4 +33,5 @@ revert do ticket.
 - `make check`: formatação, vet, race detector, testes e whitespace passaram.
 - `make docker-build`: imagem `http-server-projeto-korp:local` construída.
 - `make compose-config`: arquivo Compose validado.
-- Execução do GitHub Actions: pendente após abertura da PR.
+- GitHub Actions na PR #13: `Go quality` e `Docker and Compose` passaram.
+- [PR #13](https://github.com/SamuelvLopes/DevSecOps-showcase/pull/13) mesclada em develop.
