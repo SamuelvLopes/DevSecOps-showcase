@@ -1,6 +1,6 @@
 # KORP-002 — Serviço HTTP obrigatório em Go
 
-Status: in_review. Risco: médio. Depende de KORP-001.
+Status: done. Risco: médio. Depende de KORP-001.
 
 ## Objetivo
 
@@ -33,7 +33,8 @@ em KORP-003 antes do container. Recuperação por revert do ticket.
 
 - `make check`: formatação, vet, race detector e testes passaram.
 - Pacote `internal/server`: 86,7% de cobertura.
-- Binário iniciado em `127.0.0.1:18080` devido à porta 8080 já estar ocupada
-  no host de desenvolvimento.
+- Binário iniciado na porta padrão 8080 após liberação da porta no host de
+  desenvolvimento.
 - `GET /projeto-korp`: HTTP 200 e JSON com horário UTC atual.
 - `POST /projeto-korp`: HTTP 405; `GET /unknown`: HTTP 404.
+- [PR #2](https://github.com/SamuelvLopes/DevSecOps-showcase/pull/2) mesclada em develop.

@@ -7,12 +7,12 @@ tickets:
   depends_on: []
 - id: KORP-002
   title: Serviço HTTP obrigatório em Go
-  status: in_review
+  status: done
   depends_on:
   - KORP-001
 - id: KORP-003
   title: Operabilidade da aplicação
-  status: planned
+  status: in_review
   depends_on:
   - KORP-002
 - id: KORP-004

@@ -80,6 +80,34 @@ func TestProjectEndpointRejectsOtherMethods(t *testing.T) {
 	}
 }
 
+func TestHealthEndpoint(t *testing.T) {
+	handler := newHandler(time.Now)
+	recorder := httptest.NewRecorder()
+
+	handler.ServeHTTP(recorder, httptest.NewRequest(http.MethodGet, healthPath, nil))
+
+	if recorder.Code != http.StatusNoContent {
+		t.Fatalf("status = %d, want %d", recorder.Code, http.StatusNoContent)
+	}
+	if recorder.Body.Len() != 0 {
+		t.Fatalf("body = %q, want empty", recorder.Body.String())
+	}
+}
+
+func TestHealthEndpointRejectsOtherMethods(t *testing.T) {
+	handler := newHandler(time.Now)
+	recorder := httptest.NewRecorder()
+
+	handler.ServeHTTP(recorder, httptest.NewRequest(http.MethodPost, healthPath, nil))
+
+	if recorder.Code != http.StatusMethodNotAllowed {
+		t.Fatalf("status = %d, want %d", recorder.Code, http.StatusMethodNotAllowed)
+	}
+	if got := recorder.Header().Get("Allow"); got != http.MethodGet {
+		t.Fatalf("Allow = %q, want GET", got)
+	}
+}
+
 func TestUnknownRouteReturnsNotFound(t *testing.T) {
 	recorder := httptest.NewRecorder()
 	newHandler(time.Now).ServeHTTP(recorder, httptest.NewRequest(http.MethodGet, "/unknown", nil))

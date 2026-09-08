@@ -32,7 +32,9 @@ gerada uma vez, persistida fora do Git e reutilizada pelo provisionamento.
 - Uma única rede é suficiente ao core. Separação adicional só entra se houver
   ameaça e teste de isolamento concretos.
 - Não há banco, fila ou dependência externa na aplicação. Health comprova
-  resposta do processo; readiness separado exige semântica distinta.
+  resposta do processo com HTTP 204; readiness separado exige semântica distinta.
+- A aplicação define timeouts HTTP explícitos e trata SIGINT/SIGTERM para
+  encerramento gracioso.
 - Disponibilidade de scrape e disponibilidade pelo proxy são sinais distintos.
   O dashboard não deve apresentar scrape UP como prova de todo o caminho.
 - Estado persistente: dados de Prometheus/Grafana e credencial local. Cleanup
