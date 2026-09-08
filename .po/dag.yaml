@@ -121,12 +121,12 @@ tickets:
   - KORP-034
 - id: KORP-036
   title: Demo script e evidências
-  status: in_review
+  status: done
   depends_on:
   - KORP-035
 - id: KORP-037
   title: Clean-room validation
-  status: planned
+  status: in_review
   depends_on:
   - KORP-036
 - id: KORP-039

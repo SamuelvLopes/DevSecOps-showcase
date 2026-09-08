@@ -28,11 +28,13 @@ make compose-smoke
 make compose-load
 make compose-recovery
 make demo
+make clean-checkout
 ```
 
 `make demo` imprime contrato HTTP, portas publicadas, target Prometheus, volume
 de requisições e provisionamento Grafana. O script usa diretório temporário e
 remove a stack ao final.
+`make clean-checkout` repete a verificação em diretório temporário.
 
 ## Pontos para explicar
 

@@ -33,6 +33,7 @@ make compose-smoke
 make compose-load
 make compose-recovery
 make demo
+make clean-checkout
 ```
 
 O smoke sobe a stack, valida o contrato HTTP via NGINX, confirma Prometheus,
@@ -41,6 +42,8 @@ confirma no Prometheus que o contador de requisições recebeu tráfego. A demo 
 recuperação derruba o serviço `app`, confirma indisponibilidade momentânea,
 recupera o serviço e valida saúde, métrica e contrato HTTP.
 `make demo` imprime um roteiro curto de evidências para apresentação.
+`make clean-checkout` copia o projeto para um diretório temporário e executa
+checks/demonstração fora do working tree principal.
 
 ## Observabilidade
 
