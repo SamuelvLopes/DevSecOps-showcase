@@ -1,0 +1,11 @@
+korp_project_dir: /opt/projeto-korp
+korp_repo_src: "{{ playbook_dir }}/.."
+korp_compose_file: "{{ korp_project_dir }}/compose.yaml"
+korp_http_url: http://localhost/projeto-korp
+korp_prometheus_url: http://127.0.0.1:9090
+korp_grafana_url: http://127.0.0.1:3000
+korp_packages:
+  - ca-certificates
+  - curl
+  - gnupg
+  - lsb-release

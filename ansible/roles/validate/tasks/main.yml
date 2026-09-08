@@ -1,0 +1,4 @@
+---
+- name: Validation role placeholder
+  ansible.builtin.debug:
+    msg: HTTP, Prometheus and Grafana validation are implemented in KORP-013.

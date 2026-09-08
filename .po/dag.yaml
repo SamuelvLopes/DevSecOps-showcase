@@ -43,12 +43,12 @@ tickets:
   - KORP-006
 - id: KORP-009
   title: Grafana provisionado
-  status: in_review
+  status: done
   depends_on:
   - KORP-008
 - id: KORP-011
   title: Estrutura Ansible
-  status: planned
+  status: in_review
   depends_on:
   - KORP-007
   - KORP-009
