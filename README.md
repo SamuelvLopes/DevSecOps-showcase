@@ -3,17 +3,17 @@
 Implementação incremental do desafio técnico Korp: Go, Docker Compose, NGINX,
 Prometheus, Grafana e provisionamento Ansible em Linux.
 
-Status: serviço HTTP implementado com operabilidade básica; containerização e
-infraestrutura em desenvolvimento.
+Status: core Compose implementado, observado e validado por CI. A validação em
+VM limpa via Ansible é a próxima etapa antes da release final.
 
-## Entrega planejada
+## Entrega
 
 `cliente → NGINX :80 → http-server-projeto-korp :8080`
 
-O serviço responderá a `GET /projeto-korp` com nome e horário UTC dinâmico.
-Prometheus coletará métricas e Grafana terá dashboard provisionado por arquivos.
-Ansible preparará uma VM Ubuntu 24.04 LTS e validará o ambiente com um comando.
-Essas capacidades são planejadas, ainda não comprovadas nesta etapa.
+O serviço responde a `GET /projeto-korp` com nome e horário UTC dinâmico.
+Prometheus coleta métricas da aplicação e Grafana carrega datasource/dashboard
+por arquivos. Ansible prepara hosts Linux da família Debian, copia a stack,
+executa Compose e valida HTTP, Prometheus e Grafana.
 
 ## Navegação
 
@@ -21,6 +21,7 @@ Essas capacidades são planejadas, ainda não comprovadas nesta etapa.
 - [Arquitetura e limites](docs/architecture.md)
 - [Threat model STRIDE](docs/threat-model.md)
 - [Security review](docs/security-review.md)
+- [Runbook](docs/runbook.md)
 - [Teste de carga e observabilidade](scripts/load-observability.sh)
 - [Demo de recuperação](scripts/recovery-demo.sh)
 - [Decisões técnicas](docs/decisions/ADR-001-compose-core.md)
@@ -31,15 +32,23 @@ Essas capacidades são planejadas, ainda não comprovadas nesta etapa.
 ## Execução local
 
 ```bash
+make compose-up
+curl http://localhost/projeto-korp
+curl -i http://localhost/health
+curl http://localhost:9090/api/v1/query?query=projeto_korp_up
+make compose-down
+```
+
+Para desenvolvimento direto da aplicação:
+
+```bash
 cd app
 go run ./cmd/http-server-projeto-korp
 curl http://localhost:8080/projeto-korp
-curl -i http://localhost:8080/health
-curl http://localhost:8080/metrics
 ```
 
-O endereço padrão é `:8080`; `HTTP_ADDRESS=:18080` permite usar outra porta em
-desenvolvimento sem alterar o requisito do container.
+O endereço padrão da aplicação é `:8080`; `HTTP_ADDRESS=:18080` permite usar
+outra porta em desenvolvimento sem alterar o requisito do container.
 
 Resposta:
 
@@ -65,11 +74,13 @@ make docker-build
 make compose-up
 make compose-down
 make compose-smoke
+make compose-load
+make compose-recovery
 make ansible-syntax
 ```
 
-Requer Go 1.27.1 ou superior, Git e GNU Make. Testes de infraestrutura serão
-adicionados junto aos componentes correspondentes.
+Requer Go 1.27.1 ou superior, Git, GNU Make, Docker e Docker Compose. Ansible é
+necessário apenas para o provisionamento remoto.
 
 O Compose cria a rede bridge `projeto-korp` e mantém a aplicação sem porta
 publicada no host. O NGINX publica `80:80` e encaminha para `app:8080`.
@@ -86,5 +97,6 @@ Uma branch e uma PR por ticket, commits rastreáveis e verificações registrada
 Cada ticket registra critérios de aceite e resultados de verificação.
 Pull requests para `develop` e `main` executam CI com testes Go, build Docker e
 validação Compose. Gates de segurança executam `govulncheck` e scan de imagem.
-O smoke Compose valida HTTP, Prometheus e Grafana no fluxo completo.
+O smoke Compose valida HTTP, Prometheus e Grafana no fluxo completo. Carga curta
+com k6 e demo de recuperação também rodam em CI.
 Kubernetes e cloud são extensões futuras e não condicionam a entrega Compose/Ansible.
