@@ -60,6 +60,7 @@ make check
 make docker-build
 make compose-up
 make compose-down
+make compose-smoke
 make ansible-syntax
 ```
 
@@ -81,4 +82,5 @@ Uma branch e uma PR por ticket, commits rastreáveis e verificações registrada
 Cada ticket registra critérios de aceite e resultados de verificação.
 Pull requests para `develop` e `main` executam CI com testes Go, build Docker e
 validação Compose. Gates de segurança executam `govulncheck` e scan de imagem.
+O smoke Compose valida HTTP, Prometheus e Grafana no fluxo completo.
 Kubernetes e cloud são extensões futuras e não condicionam a entrega Compose/Ansible.

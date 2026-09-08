@@ -41,3 +41,16 @@ jobs:
 
       - name: Validate Compose file
         run: make compose-config
+
+  compose-smoke:
+    name: Compose smoke
+    runs-on: ubuntu-24.04
+    needs:
+      - go-quality
+      - docker-compose
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Compose smoke
+        run: make compose-smoke

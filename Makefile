@@ -1,8 +1,8 @@
 .DEFAULT_GOAL := help
 
-.PHONY: ansible-syntax help check compose-config compose-down compose-up docker-build test
+.PHONY: ansible-syntax compose-smoke help check compose-config compose-down compose-up docker-build test
 help:
-	@printf '%s\n' 'Projeto Korp' '  make test            Executa testes Go com race detector.' '  make check           Executa formatação, vet, testes e whitespace.' '  make docker-build    Constrói a imagem da aplicação.' '  make compose-config  Valida compose.yaml.' '  make compose-up      Sobe a stack local.' '  make compose-down    Remove a stack local.' '  make ansible-syntax  Valida sintaxe do playbook quando Ansible estiver disponível.'
+	@printf '%s\n' 'Projeto Korp' '  make test            Executa testes Go com race detector.' '  make check           Executa formatação, vet, testes e whitespace.' '  make docker-build    Constrói a imagem da aplicação.' '  make compose-config  Valida compose.yaml.' '  make compose-up      Sobe a stack local.' '  make compose-down    Remove a stack local.' '  make compose-smoke   Executa smoke test da stack Compose.' '  make ansible-syntax  Valida sintaxe do playbook quando Ansible estiver disponível.'
 
 test:
 	cd app && go test -race -cover ./...
@@ -25,6 +25,9 @@ compose-up:
 
 compose-down:
 	docker compose down --remove-orphans
+
+compose-smoke:
+	sh scripts/smoke-compose.sh
 
 ansible-syntax:
 	cd ansible && ansible-playbook --syntax-check site.yml

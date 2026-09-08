@@ -75,12 +75,12 @@ tickets:
   - KORP-005
 - id: KORP-016
   title: Dependabot e governance GitHub
-  status: in_review
+  status: done
   depends_on:
   - KORP-014
 - id: KORP-017
   title: Integration/smoke testing do Compose
-  status: planned
+  status: in_review
   depends_on:
   - KORP-007
   - KORP-009
