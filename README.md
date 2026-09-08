@@ -62,7 +62,7 @@ make compose-down
 make ansible-syntax
 ```
 
-Requer Go 1.24 ou superior, Git e GNU Make. Testes de infraestrutura serão
+Requer Go 1.27.1 ou superior, Git e GNU Make. Testes de infraestrutura serão
 adicionados junto aos componentes correspondentes.
 
 O Compose cria a rede bridge `projeto-korp` e mantém a aplicação sem porta
@@ -79,5 +79,5 @@ Grafana ao final da execução.
 Uma branch e uma PR por ticket, commits rastreáveis e verificações registradas.
 Cada ticket registra critérios de aceite e resultados de verificação.
 Pull requests para `develop` e `main` executam CI com testes Go, build Docker e
-validação Compose.
+validação Compose. Gates de segurança executam `govulncheck` e scan de imagem.
 Kubernetes e cloud são extensões futuras e não condicionam a entrega Compose/Ansible.
