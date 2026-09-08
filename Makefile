@@ -1,8 +1,8 @@
 .DEFAULT_GOAL := help
 
-.PHONY: ansible-syntax compose-load compose-recovery compose-smoke help check compose-config compose-down compose-up docker-build test
+.PHONY: ansible-syntax compose-load compose-recovery compose-smoke demo help check compose-config compose-down compose-up docker-build test
 help:
-	@printf '%s\n' 'Projeto Korp' '  make test            Executa testes Go com race detector.' '  make check           Executa formatação, vet, testes e whitespace.' '  make docker-build    Constrói a imagem da aplicação.' '  make compose-config  Valida compose.yaml.' '  make compose-up      Sobe a stack local.' '  make compose-down    Remove a stack local.' '  make compose-smoke   Executa smoke test da stack Compose.' '  make compose-load    Executa carga curta e valida métrica no Prometheus.' '  make compose-recovery Executa demo de falha e recuperação.' '  make ansible-syntax  Valida sintaxe do playbook quando Ansible estiver disponível.'
+	@printf '%s\n' 'Projeto Korp' '  make test            Executa testes Go com race detector.' '  make check           Executa formatação, vet, testes e whitespace.' '  make docker-build    Constrói a imagem da aplicação.' '  make compose-config  Valida compose.yaml.' '  make compose-up      Sobe a stack local.' '  make compose-down    Remove a stack local.' '  make compose-smoke   Executa smoke test da stack Compose.' '  make compose-load    Executa carga curta e valida métrica no Prometheus.' '  make compose-recovery Executa demo de falha e recuperação.' '  make demo            Executa roteiro curto de evidências.' '  make ansible-syntax  Valida sintaxe do playbook quando Ansible estiver disponível.'
 
 test:
 	cd app && go test -race -cover ./...
@@ -34,6 +34,9 @@ compose-load:
 
 compose-recovery:
 	sh scripts/recovery-demo.sh
+
+demo:
+	sh scripts/demo-evidence.sh
 
 ansible-syntax:
 	cd ansible && ansible-playbook --syntax-check site.yml
