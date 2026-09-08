@@ -1,6 +1,6 @@
 # KORP-016 — Dependabot e governance GitHub
 
-Status: in_review. Risco: baixo. Depende de KORP-014.
+Status: done. Risco: baixo. Depende de KORP-014.
 
 ## Objetivo
 
@@ -36,4 +36,6 @@ sem checks. Recuperação por revert do ticket.
 - `make compose-config`: arquivo Compose validado.
 - Documentação GitHub consultada: `docker-compose` é ecossistema suportado pelo
   Dependabot.
-- GitHub Actions: pendente após abertura da PR.
+- GitHub Actions na PR #15: `Go quality`, `Docker and Compose`, security gates e
+  `GitGuardian Security Checks` passaram.
+- [PR #15](https://github.com/SamuelvLopes/DevSecOps-showcase/pull/15) mesclada em develop.
