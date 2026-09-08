@@ -27,12 +27,12 @@ tickets:
   - KORP-004
 - id: KORP-006
   title: Docker Compose e runtime hardening
-  status: in_review
+  status: done
   depends_on:
   - KORP-005
 - id: KORP-007
   title: NGINX reverse proxy
-  status: planned
+  status: in_review
   depends_on:
   - KORP-006
 - id: KORP-008

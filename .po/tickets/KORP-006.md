@@ -1,6 +1,6 @@
 # KORP-006 — Docker Compose e runtime hardening
 
-Status: in_review. Risco: médio. Depende de KORP-005.
+Status: done. Risco: médio. Depende de KORP-005.
 
 ## Objetivo
 
@@ -40,3 +40,4 @@ capabilities adicionais e roda com filesystem somente leitura. Recuperação por
 - `docker inspect`: `Ports={"8080/tcp":null}`, `ReadOnly=true`,
   `CapDrop=["ALL"]`, `SecurityOpt=["no-new-privileges:true"]`.
 - `make compose-down`: container e rede removidos.
+- [PR #6](https://github.com/SamuelvLopes/DevSecOps-showcase/pull/6) mesclada em develop.

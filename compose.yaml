@@ -14,6 +14,18 @@ services:
     networks:
       - projeto-korp
 
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d:ro
+    networks:
+      - projeto-korp
+
 networks:
   projeto-korp:
     name: projeto-korp
