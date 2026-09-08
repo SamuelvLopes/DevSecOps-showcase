@@ -1,6 +1,6 @@
 # KORP-013 — Validação e idempotência Ansible
 
-Status: in_review. Risco: alto. Depende de KORP-012.
+Status: done. Risco: alto. Depende de KORP-012.
 
 ## Objetivo
 
@@ -40,3 +40,4 @@ Recuperação por `docker compose down` no host alvo ou revert do ticket.
 - `ansible-playbook --syntax-check`: não executado localmente porque Ansible não
   está no PATH e `python3-venv` não está disponível para criar venv temporário.
 - Execução em VM limpa: pendente para ambiente alvo.
+- [PR #12](https://github.com/SamuelvLopes/DevSecOps-showcase/pull/12) mesclada em develop.
