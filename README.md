@@ -25,6 +25,7 @@ executa Compose e valida HTTP, Prometheus e Grafana.
 - [Demo](docs/demo.md)
 - [Teste de carga e observabilidade](scripts/load-observability.sh)
 - [Demo de recuperação](scripts/recovery-demo.sh)
+- [Validação de checkout limpo](scripts/clean-checkout-validation.sh)
 - [Decisões técnicas](docs/decisions/ADR-001-compose-core.md)
 - [Governança GitHub](docs/github-governance.md)
 - [Tickets e dependências](.po/README.md)
@@ -77,6 +78,7 @@ make compose-down
 make compose-smoke
 make compose-load
 make compose-recovery
+make clean-checkout
 make ansible-syntax
 ```
 
