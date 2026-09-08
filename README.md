@@ -70,8 +70,9 @@ publicada no host. O NGINX publica `80:80` e encaminha para `app:8080`.
 Prometheus fica em `127.0.0.1:9090` para consulta local.
 Grafana fica em `127.0.0.1:3000` com dashboard provisionado.
 
-O diretório `ansible/` contém a estrutura do playbook para provisionamento em VM
-Linux; instalação Docker, deploy e validações são evoluídos nos tickets Ansible.
+O diretório `ansible/` contém o playbook para instalar Docker, copiar a stack e
+executar Compose em VM Linux. As validações automatizadas finais entram no
+ticket seguinte.
 
 ## Processo
 

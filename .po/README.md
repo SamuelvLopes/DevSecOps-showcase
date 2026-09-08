@@ -17,3 +17,4 @@ aceite atendidos, verificação registrada e revisão da mudança.
 - [KORP-008 — Prometheus](tickets/KORP-008.md)
 - [KORP-009 — Grafana provisionado](tickets/KORP-009.md)
 - [KORP-011 — Estrutura Ansible](tickets/KORP-011.md)
+- [KORP-012 — Provisionamento Ansible](tickets/KORP-012.md)

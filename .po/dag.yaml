@@ -48,13 +48,13 @@ tickets:
   - KORP-008
 - id: KORP-011
   title: Estrutura Ansible
-  status: in_review
+  status: done
   depends_on:
   - KORP-007
   - KORP-009
 - id: KORP-012
   title: Provisionamento total por Ansible
-  status: planned
+  status: in_review
   depends_on:
   - KORP-011
 - id: KORP-013
