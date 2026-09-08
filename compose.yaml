@@ -1,0 +1,20 @@
+services:
+  app:
+    build:
+      context: ./app
+    image: http-server-projeto-korp:local
+    restart: unless-stopped
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    expose:
+      - "8080"
+    networks:
+      - projeto-korp
+
+networks:
+  projeto-korp:
+    name: projeto-korp
+    driver: bridge

@@ -1,6 +1,6 @@
 # KORP-005 — Dockerfile multi-stage e hardening da imagem
 
-Status: in_review. Risco: médio. Depende de KORP-004.
+Status: done. Risco: médio. Depende de KORP-004.
 
 ## Objetivo
 
@@ -36,3 +36,4 @@ arquivos locais copiados para o runtime. Recuperação por revert do ticket.
 - `GET /health`: HTTP 204 sem corpo.
 - `GET /metrics`: expôs `projeto_korp_up 1` e contador HTTP.
 - `docker inspect`: `User=65532:65532` e `ExposedPorts={"8080/tcp":{}}`.
+- [PR #5](https://github.com/SamuelvLopes/DevSecOps-showcase/pull/5) mesclada em develop.
