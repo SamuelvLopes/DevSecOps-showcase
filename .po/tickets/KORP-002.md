@@ -1,6 +1,6 @@
 # KORP-002 — Serviço HTTP obrigatório em Go
 
-Status: planned. Risco: médio. Depende de KORP-001.
+Status: in_review. Risco: médio. Depende de KORP-001.
 
 ## Objetivo
 
@@ -17,14 +17,23 @@ endpoint retornam 405 com Allow: GET. Sem Docker, métricas ou NGINX neste ticke
 
 ## Aceite e verificação
 
-- HTTP 200, JSON com apenas os dois campos e Content-Type correto.
-- Relógio não UTC convertido corretamente e chamado novamente por request.
-- POST retorna 405/Allow; rota desconhecida retorna 404.
-- gofmt, go vet e go test -race -cover ./... em app/.
-- Execução local e curl com contrato confirmado; documentar comando e resultado.
-- Não exigir timestamps diferentes para chamadas dentro do mesmo segundo.
+- [x] HTTP 200, JSON com apenas os dois campos e Content-Type correto.
+- [x] Relógio não UTC convertido corretamente e chamado novamente por request.
+- [x] POST retorna 405/Allow; rota desconhecida retorna 404.
+- [x] gofmt, go vet e go test -race -cover ./... em app/.
+- [x] Execução local e curl com contrato confirmado.
+- [x] Não exigir timestamps diferentes para chamadas dentro do mesmo segundo.
 
 ## Segurança, observabilidade e recuperação
 
 Sem secrets ou dados de usuário no contrato. Timeouts/logs/shutdown serão tratados
 em KORP-003 antes do container. Recuperação por revert do ticket.
+
+## Evidências
+
+- `make check`: formatação, vet, race detector e testes passaram.
+- Pacote `internal/server`: 86,7% de cobertura.
+- Binário iniciado em `127.0.0.1:18080` devido à porta 8080 já estar ocupada
+  no host de desenvolvimento.
+- `GET /projeto-korp`: HTTP 200 e JSON com horário UTC atual.
+- `POST /projeto-korp`: HTTP 405; `GET /unknown`: HTTP 404.

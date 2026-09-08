@@ -3,7 +3,7 @@
 Implementação incremental do desafio técnico Korp: Go, Docker Compose, NGINX,
 Prometheus, Grafana e provisionamento Ansible em Linux.
 
-Status: bootstrap do repositório; aplicação e infraestrutura ainda não implementadas.
+Status: serviço HTTP implementado; containerização e infraestrutura em desenvolvimento.
 
 ## Entrega planejada
 
@@ -22,16 +22,35 @@ Essas capacidades são planejadas, ainda não comprovadas nesta etapa.
 - [Tickets e dependências](.po/README.md)
 - [GitFlow e convenções](docs/gitflow.md)
 
-## Verificação desta etapa
+## Execução local
 
 ```bash
+cd app
+go run ./cmd/http-server-projeto-korp
+curl http://localhost:8080/projeto-korp
+```
+
+O endereço padrão é `:8080`; `HTTP_ADDRESS=:18080` permite usar outra porta em
+desenvolvimento sem alterar o requisito do container.
+
+Resposta:
+
+```json
+{"nome":"Projeto Korp","horario":"2026-09-08T20:15:30Z"}
+```
+
+O valor de `horario` corresponde ao instante da requisição em UTC.
+
+## Verificação
+
+```bash
+make test
 make help
 make check
 ```
 
-Requer Git e GNU Make. O check atual verifica whitespace no diff; testes de
-aplicação e infraestrutura serão adicionados junto aos componentes correspondentes.
-O quick start operacional será publicado quando houver execução validada.
+Requer Go 1.24 ou superior, Git e GNU Make. Testes de infraestrutura serão
+adicionados junto aos componentes correspondentes.
 
 ## Processo
 
