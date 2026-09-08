@@ -71,8 +71,8 @@ Prometheus fica em `127.0.0.1:9090` para consulta local.
 Grafana fica em `127.0.0.1:3000` com dashboard provisionado.
 
 O diretório `ansible/` contém o playbook para instalar Docker, copiar a stack e
-executar Compose em VM Linux. As validações automatizadas finais entram no
-ticket seguinte.
+executar Compose em VM Linux. O playbook valida o endpoint HTTP, Prometheus e
+Grafana ao final da execução.
 
 ## Processo
 
