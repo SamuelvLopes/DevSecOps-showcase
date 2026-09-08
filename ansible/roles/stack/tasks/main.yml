@@ -1,0 +1,4 @@
+---
+- name: Stack role placeholder
+  ansible.builtin.debug:
+    msg: Source deployment and Compose convergence are implemented in KORP-012.

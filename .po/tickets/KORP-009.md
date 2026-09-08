@@ -1,6 +1,6 @@
 # KORP-009 — Grafana provisionado
 
-Status: in_review. Risco: médio. Depende de KORP-008.
+Status: done. Risco: médio. Depende de KORP-008.
 
 ## Objetivo
 
@@ -45,3 +45,4 @@ manualmente.
 - `docker inspect grafana`: `3000/tcp` publicado em `127.0.0.1:3000`,
   provisioning e dashboards montados read-only e volume `devsecops_grafana-data`.
 - `make compose-down`: containers e rede removidos, preservando volumes.
+- [PR #9](https://github.com/SamuelvLopes/DevSecOps-showcase/pull/9) mesclada em develop.

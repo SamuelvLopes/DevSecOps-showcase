@@ -30,6 +30,8 @@ arquivo versionado.
 - Ansible instala Docker/Compose, transfere fontes/configurações, cria rede,
   constrói a imagem e converge a stack. Alterações de código e configuração
   devem provocar apenas rebuild/reload/recriação necessários.
+- O playbook é separado em roles de Docker, stack e validação para manter
+  idempotência e evidências por responsabilidade.
 - Uma única rede é suficiente ao core. Separação adicional só entra se houver
   ameaça e teste de isolamento concretos.
 - Não há banco, fila ou dependência externa na aplicação. Health comprova

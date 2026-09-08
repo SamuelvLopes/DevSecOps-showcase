@@ -1,0 +1,17 @@
+- name: Provision Projeto Korp stack
+  hosts: korp
+  become: true
+  gather_facts: true
+
+  pre_tasks:
+    - name: Validate supported operating system
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.os_family == "Debian"
+          - ansible_facts.distribution_major_version | int >= 22
+        fail_msg: "This playbook supports Debian-family Linux hosts compatible with Ubuntu 24.04."
+
+  roles:
+    - role: docker
+    - role: stack
+    - role: validate

@@ -59,6 +59,7 @@ make check
 make docker-build
 make compose-up
 make compose-down
+make ansible-syntax
 ```
 
 Requer Go 1.24 ou superior, Git e GNU Make. Testes de infraestrutura serão
@@ -68,6 +69,9 @@ O Compose cria a rede bridge `projeto-korp` e mantém a aplicação sem porta
 publicada no host. O NGINX publica `80:80` e encaminha para `app:8080`.
 Prometheus fica em `127.0.0.1:9090` para consulta local.
 Grafana fica em `127.0.0.1:3000` com dashboard provisionado.
+
+O diretório `ansible/` contém a estrutura do playbook para provisionamento em VM
+Linux; instalação Docker, deploy e validações são evoluídos nos tickets Ansible.
 
 ## Processo
 
