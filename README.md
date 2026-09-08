@@ -56,6 +56,7 @@ requisições HTTP.
 make test
 make help
 make check
+make docker-build
 ```
 
 Requer Go 1.24 ou superior, Git e GNU Make. Testes de infraestrutura serão

@@ -1,6 +1,6 @@
 # KORP-004 — Métricas Prometheus da aplicação
 
-Status: in_review. Risco: médio. Depende de KORP-003.
+Status: done. Risco: médio. Depende de KORP-003.
 
 ## Objetivo
 
@@ -38,3 +38,4 @@ Recuperação por revert do ticket.
 - `GET /projeto-korp`: HTTP 200 e JSON com horário UTC atual.
 - `GET /metrics`: expôs `projeto_korp_up 1`.
 - `GET /metrics`: expôs contador para `/projeto-korp`, método GET e status 200.
+- [PR #4](https://github.com/SamuelvLopes/DevSecOps-showcase/pull/4) mesclada em develop.
