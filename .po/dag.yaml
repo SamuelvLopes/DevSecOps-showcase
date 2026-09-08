@@ -1,0 +1,142 @@
+version: 1
+scope: Core oficial + qualidade; extensões adiadas
+tickets:
+- id: KORP-001
+  title: Bootstrap, governança e arquitetura
+  status: in_review
+  depends_on: []
+- id: KORP-002
+  title: Serviço HTTP obrigatório em Go
+  status: planned
+  depends_on:
+  - KORP-001
+- id: KORP-003
+  title: Operabilidade da aplicação
+  status: planned
+  depends_on:
+  - KORP-002
+- id: KORP-004
+  title: Métricas Prometheus da aplicação
+  status: planned
+  depends_on:
+  - KORP-003
+- id: KORP-005
+  title: Dockerfile multi-stage e hardening da imagem
+  status: planned
+  depends_on:
+  - KORP-004
+- id: KORP-006
+  title: Docker Compose e runtime hardening
+  status: planned
+  depends_on:
+  - KORP-005
+- id: KORP-007
+  title: NGINX reverse proxy
+  status: planned
+  depends_on:
+  - KORP-006
+- id: KORP-008
+  title: Prometheus
+  status: planned
+  depends_on:
+  - KORP-004
+  - KORP-006
+- id: KORP-009
+  title: Grafana provisionado
+  status: planned
+  depends_on:
+  - KORP-008
+- id: KORP-011
+  title: Estrutura Ansible
+  status: planned
+  depends_on:
+  - KORP-007
+  - KORP-009
+- id: KORP-012
+  title: Provisionamento total por Ansible
+  status: planned
+  depends_on:
+  - KORP-011
+- id: KORP-013
+  title: Validação e idempotência Ansible
+  status: planned
+  depends_on:
+  - KORP-012
+- id: KORP-014
+  title: CI Quality Checks
+  status: planned
+  depends_on:
+  - KORP-002
+- id: KORP-015
+  title: DevSecOps security gates
+  status: planned
+  depends_on:
+  - KORP-014
+  - KORP-005
+- id: KORP-016
+  title: Dependabot e governance GitHub
+  status: planned
+  depends_on:
+  - KORP-014
+- id: KORP-017
+  title: Integration/smoke testing do Compose
+  status: planned
+  depends_on:
+  - KORP-007
+  - KORP-009
+  - KORP-014
+- id: KORP-018
+  title: Threat Modeling STRIDE
+  status: planned
+  depends_on:
+  - KORP-007
+  - KORP-009
+- id: KORP-019
+  title: Security code review e PR checklist
+  status: planned
+  depends_on:
+  - KORP-018
+- id: KORP-022
+  title: k6 e observabilidade sob carga
+  status: planned
+  depends_on:
+  - KORP-009
+  - KORP-017
+- id: KORP-034
+  title: Failure injection / recovery demo
+  status: planned
+  depends_on:
+  - KORP-013
+  - KORP-017
+- id: KORP-035
+  title: README, ADRs e runbook finais
+  status: planned
+  depends_on:
+  - KORP-013
+  - KORP-015
+  - KORP-016
+  - KORP-017
+  - KORP-019
+  - KORP-022
+  - KORP-034
+- id: KORP-036
+  title: Demo script e evidências
+  status: planned
+  depends_on:
+  - KORP-035
+- id: KORP-037
+  title: Clean-room validation
+  status: planned
+  depends_on:
+  - KORP-036
+- id: KORP-039
+  title: Ensaio técnico/oral
+  status: planned
+  depends_on:
+  - KORP-037
+- id: KORP-040
+  title: Release final e envio
+  status: planned
+  depends_on:
+  - KORP-037
+  - KORP-039
