@@ -20,6 +20,8 @@ Prometheus e Grafana terão acesso administrativo via loopback da VM, com túnel
 SSH documentado para acesso pelo navegador do controlador. A senha Grafana será
 gerada uma vez, persistida fora do Git e reutilizada pelo provisionamento.
 Prometheus coleta `/metrics` em `app:8080` pelo DNS da rede Docker.
+Grafana consome Prometheus por datasource provisionado e carrega dashboard por
+arquivo versionado.
 
 ## Fronteiras e operação
 
