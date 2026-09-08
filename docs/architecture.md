@@ -1,6 +1,6 @@
 # Arquitetura planejada
 
-Status: decisões iniciais; implementação e validação pendentes.
+Status: core implementado em Compose; validação em VM limpa pendente.
 
 ```text
 Controlador Ansible -- SSH/sudo --> VM Ubuntu 24.04 LTS
@@ -51,6 +51,7 @@ arquivo versionado.
 - [Compose como core](decisions/ADR-001-compose-core.md)
 - [NGINX e exposição](decisions/ADR-002-nginx-entrypoint.md)
 - [Extensões futuras](decisions/ADR-003-showcase-kubernetes-cloud.md)
+- [Threat model STRIDE](threat-model.md)
 
-CI, scans e smoke tests serão introduzidos progressivamente. Não há ainda
-evidência de disponibilidade, idempotência ou segurança de runtime.
+CI, scans e smoke tests já cobrem o core local. A validação final em VM limpa
+será registrada antes da release.

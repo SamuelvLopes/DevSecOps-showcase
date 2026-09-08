@@ -1,6 +1,6 @@
 # KORP-017 — Integration/smoke testing do Compose
 
-Status: in_review. Risco: médio. Depende de KORP-007, KORP-009 e KORP-014.
+Status: done. Risco: médio. Depende de KORP-007, KORP-009 e KORP-014.
 
 ## Objetivo
 
@@ -38,4 +38,6 @@ documentado no runbook final. Recuperação por `make compose-down`.
   portas confirmada.
 - Saída do smoke: `compose smoke passed`.
 - Após o smoke, `docker compose ps` não retornou containers ativos.
-- GitHub Actions: pendente após abertura da PR.
+- GitHub Actions na PR #16: `Compose smoke`, `Go quality`,
+  `Docker and Compose`, security gates e `GitGuardian Security Checks` passaram.
+- [PR #16](https://github.com/SamuelvLopes/DevSecOps-showcase/pull/16) mesclada em develop.
