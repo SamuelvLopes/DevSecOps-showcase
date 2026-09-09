@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+  push:
+    branches:
+      - develop
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  go-quality:
+    name: Go quality
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: app/go.mod
+
+      - name: Run checks
+        run: make check
+
+  docker-compose:
+    name: Docker and Compose
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build application image
+        run: make docker-build
+
+      - name: Validate Compose file
+        run: make compose-config
+
+  compose-smoke:
+    name: Compose smoke
+    runs-on: ubuntu-24.04
+    needs:
+      - go-quality
+      - docker-compose
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Compose smoke
+        run: make compose-smoke
+
+  compose-load:
+    name: Compose load observability
+    runs-on: ubuntu-24.04
+    needs:
+      - compose-smoke
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run load observability
+        run: make compose-load
+
+  compose-recovery:
+    name: Compose recovery demo
+    runs-on: ubuntu-24.04
+    needs:
+      - compose-smoke
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run recovery demo
+        run: make compose-recovery

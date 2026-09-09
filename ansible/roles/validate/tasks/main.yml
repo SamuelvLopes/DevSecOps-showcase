@@ -1,0 +1,128 @@
+---
+- name: Wait for HTTP endpoint through NGINX
+  ansible.builtin.uri:
+    url: "{{ korp_http_url }}"
+    method: GET
+    return_content: true
+    status_code: 200
+  register: korp_http_response
+  until: korp_http_response.status == 200
+  retries: 30
+  delay: 2
+  changed_when: false
+
+- name: Validate HTTP response contract
+  ansible.builtin.assert:
+    that:
+      - korp_http_response.json.nome == "Projeto Korp"
+      - korp_http_response.json.horario is match("^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$")
+      - korp_http_response.json.keys() | list | sort == ["horario", "nome"]
+    fail_msg: "Unexpected /projeto-korp response contract."
+
+- name: Print project endpoint response
+  ansible.builtin.debug:
+    var: korp_http_response.json
+
+- name: Wait for Prometheus API
+  ansible.builtin.uri:
+    url: "{{ korp_prometheus_url }}/-/ready"
+    method: GET
+    status_code: 200
+  register: korp_prometheus_ready
+  until: korp_prometheus_ready.status == 200
+  retries: 30
+  delay: 2
+  changed_when: false
+
+- name: Validate Prometheus target health
+  ansible.builtin.uri:
+    url: "{{ korp_prometheus_url }}/api/v1/targets?state=active"
+    method: GET
+    return_content: true
+    status_code: 200
+  register: korp_prometheus_targets
+  until: >-
+    korp_prometheus_targets.json.data.activeTargets
+    | selectattr('labels.job', 'equalto', 'http-server-projeto-korp')
+    | selectattr('health', 'equalto', 'up')
+    | list
+    | length > 0
+  retries: 30
+  delay: 2
+  changed_when: false
+  failed_when: >-
+    not (
+      korp_prometheus_targets.json.data.activeTargets
+      | selectattr('labels.job', 'equalto', 'http-server-projeto-korp')
+      | selectattr('health', 'equalto', 'up')
+      | list
+      | length > 0
+    )
+
+- name: Validate application availability metric
+  ansible.builtin.uri:
+    url: "{{ korp_prometheus_url }}/api/v1/query?query=projeto_korp_up"
+    method: GET
+    return_content: true
+    status_code: 200
+  register: korp_prometheus_up
+  until: >-
+    korp_prometheus_up.json.data.result | length > 0 and
+    korp_prometheus_up.json.data.result[0].value[1] == "1"
+  retries: 30
+  delay: 2
+  changed_when: false
+  failed_when: >-
+    korp_prometheus_up.json.data.result | length == 0 or
+    korp_prometheus_up.json.data.result[0].value[1] != "1"
+
+- name: Validate request volume metric
+  ansible.builtin.uri:
+    url: "{{ korp_prometheus_url }}/api/v1/query?query=projeto_korp_http_requests_total"
+    method: GET
+    return_content: true
+    status_code: 200
+  register: korp_prometheus_requests
+  until: korp_prometheus_requests.json.data.result | length > 0
+  retries: 30
+  delay: 2
+  changed_when: false
+  failed_when: korp_prometheus_requests.json.data.result | length == 0
+
+- name: Wait for Grafana API
+  ansible.builtin.uri:
+    url: "{{ korp_grafana_url }}/api/health"
+    method: GET
+    return_content: true
+    status_code: 200
+  register: korp_grafana_health
+  until: korp_grafana_health.status == 200
+  retries: 30
+  delay: 2
+  changed_when: false
+  failed_when: korp_grafana_health.json.database != "ok"
+
+- name: Validate Grafana datasource
+  ansible.builtin.uri:
+    url: "{{ korp_grafana_url }}/api/datasources/name/Prometheus"
+    method: GET
+    return_content: true
+    status_code: 200
+  register: korp_grafana_datasource
+  changed_when: false
+  failed_when: >-
+    korp_grafana_datasource.json.type != "prometheus" or
+    korp_grafana_datasource.json.url != "http://prometheus:9090" or
+    korp_grafana_datasource.json.uid != "prometheus"
+
+- name: Validate Grafana dashboard
+  ansible.builtin.uri:
+    url: "{{ korp_grafana_url }}/api/dashboards/uid/projeto-korp"
+    method: GET
+    return_content: true
+    status_code: 200
+  register: korp_grafana_dashboard
+  changed_when: false
+  failed_when: >-
+    korp_grafana_dashboard.json.dashboard.title != "Projeto Korp" or
+    korp_grafana_dashboard.json.dashboard.panels | length < 2
