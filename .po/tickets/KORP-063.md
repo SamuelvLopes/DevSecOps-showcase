@@ -1,6 +1,6 @@
 # KORP-063 — Ciclo DevOps e referências ISO/IEC no README
 
-Status: in_review. Risco: baixo. Depende de KORP-062.
+Status: done. Risco: baixo. Depende de KORP-062.
 
 ## Objetivo
 
@@ -18,7 +18,7 @@ Explicitar no README como a entrega percorre o ciclo DevOps e quais referências
 - [x] README cita referências ISO/IEC sem alegar certificação.
 - [x] Links e arquivos referenciados já existem no repo.
 - [x] Security workflow evita o mirror instável do Trivy DB e usa GHCR.
-- [ ] PR integrada em `develop`.
+- [x] PR integrada em `develop`.
 - [ ] Release patch promovida para `main`.
 
 ## Verificação
