@@ -13,10 +13,15 @@ app:
 
 nginx:
   replicas: 1
+  # Imagem unprivileged: o entrypoint da imagem oficial do nginx roda como root
+  # e faz chown em /var/cache/nginx, o que falha com capabilities dropadas.
+  # A variante unprivileged ja vem com as permissoes corretas, roda como 101 e
+  # escuta em porta alta, dispensando CAP_NET_BIND_SERVICE.
   image:
-    repository: nginx
-    tag: 1.27-alpine
+    repository: nginxinc/nginx-unprivileged
+    tag: 1.31-alpine
     pullPolicy: IfNotPresent
+  containerPort: 8080
   service:
     type: ClusterIP
     port: 80

@@ -201,8 +201,13 @@ Fora do escopo do enunciado, presentes como demonstração de amplitude:
   ```
 - **Helm chart e Kubernetes** — chart da aplicação e do NGINX, `ServiceMonitor`
   para o kube-prometheus-stack, valores para Loki, Tempo, Alloy e Beyla, e
-  bootstrap OpenTelemetry opt-in na aplicação. Validados por `helm lint` e
-  `helm template` em CI; **não há cluster em execução**.
+  bootstrap OpenTelemetry opt-in na aplicação.
+  O chart foi **aplicado e exercitado em cluster real** (microk8s, Kubernetes
+  v1.32.13): os dois Deployments chegaram a `1/1 Running`, `/projeto-korp`
+  respondeu o contrato através do NGINX e `/metrics` expôs as métricas,
+  incluindo o histograma de duração. Os recursos foram removidos após a
+  validação. O `ServiceMonitor` **não** foi exercitado: aquele cluster não tem o
+  Prometheus Operator, então ele segue validado apenas por `helm template`.
   Ver [`docs/kubernetes-observability.md`](docs/kubernetes-observability.md).
 - **Terraform para AWS e Azure** — exemplos que provisionam uma VM Ubuntu para
   uso com o playbook. Validados por `fmt` e `validate` em CI; **nunca aplicados
