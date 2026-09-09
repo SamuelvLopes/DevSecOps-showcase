@@ -172,6 +172,41 @@ As mesmas verificações rodam em CI a cada pull request, em jobs separados:
 | `Go quality` | testes com race detector, formatação e vet |
 | `Go vulnerability scan` / `Image vulnerability scan` | `govulncheck` e scan da imagem, bloqueantes |
 
+## Ciclo DevOps e referências ISO/IEC
+
+A entrega segue um ciclo DevOps completo, com artefatos versionados para cada
+etapa: planejamento em tickets, implementação em branches, build de imagem,
+testes automatizados, publicação, operação com observabilidade e melhoria por
+feedback de validação. O fluxo usado no repositório é:
+
+```text
+plan -> code -> build -> test -> release -> deploy/run -> observe -> improve
+```
+
+| Etapa | Evidência no projeto |
+| --- | --- |
+| Plan | tickets em [`.po/`](.po/README.md), dependências e critérios de aceite |
+| Code | app Go, Compose, Ansible, Helm e Terraform versionados |
+| Build | Dockerfile multi-stage e publicação de imagem no GHCR |
+| Test | testes Go, smoke Compose, carga, recovery, clean checkout e clean-room Ansible |
+| Release | GitFlow, PRs, tags anotadas e [`RELEASE.md`](RELEASE.md) |
+| Run | Compose como caminho principal e Ansible para provisionamento do host |
+| Observe | Prometheus, Grafana, métricas RED e dashboard provisionado |
+| Improve | correções documentadas após evidência real, como KORP-054, KORP-057 e KORP-060 |
+
+As práticas de segurança e operação foram inspiradas por normas reconhecidas,
+sem declarar certificação ou conformidade formal:
+
+- **ISO/IEC 27001:2022** — gestão de segurança da informação como disciplina:
+  controles versionados, rastreabilidade, revisão e gates de segurança.
+- **ISO/IEC 27002:2022** — referência para controles de segurança aplicáveis:
+  mínimo privilégio, gestão de vulnerabilidades, logging e segregação de
+  interfaces administrativas.
+- **ISO/IEC 27005:2022** — tratamento de risco: threat model STRIDE, registro
+  de riscos e decisões de recuperação.
+- **ISO/IEC 20000-1:2018** — gestão de serviço: runbook, monitoração,
+  validação operacional e melhoria contínua.
+
 ## Engenharia além do desafio
 
 - **Imagem mínima e sem privilégio**: build multi-stage para `scratch`, usuário
