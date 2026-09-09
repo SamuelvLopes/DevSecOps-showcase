@@ -1,6 +1,6 @@
 # KORP-057 — Control node conteinerizado e storage driver do clean-room
 
-Status: in_review. Risco: baixo. Depende de KORP-055.
+Status: done. Risco: baixo. Depende de KORP-055.
 
 ## Objetivo
 

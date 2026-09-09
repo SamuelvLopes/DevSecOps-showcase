@@ -1,6 +1,6 @@
 # KORP-058 — Evidência mostrada no README
 
-Status: in_review. Risco: baixo. Depende de KORP-051, KORP-055 e KORP-057.
+Status: done. Risco: baixo. Depende de KORP-051, KORP-055 e KORP-057.
 
 ## Objetivo
 

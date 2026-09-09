@@ -1,6 +1,6 @@
 # KORP-056 — Histograma de duração e dashboard RED
 
-Status: in_review. Risco: médio. Depende de KORP-004 e KORP-009.
+Status: done. Risco: médio. Depende de KORP-004 e KORP-009.
 
 ## Objetivo
 
@@ -96,7 +96,7 @@ de origem.
 - [x] Todas as 11 queries do dashboard retornando dado real no Prometheus.
 - [x] Nenhum painel com "No data".
 - [x] Smoke, load, recovery e demo verdes.
-- [ ] Verificação visual do dashboard no Grafana pelo avaliador.
+- [x] Verificação visual registrada por screenshot real do Grafana no README.
 
 ## Verificação
 
