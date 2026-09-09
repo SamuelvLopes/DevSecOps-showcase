@@ -1,6 +1,6 @@
 # KORP-060 — Chart do NGINX não subia em cluster real
 
-Status: in_review. Risco: alto. Depende de KORP-042.
+Status: done. Risco: alto. Depende de KORP-042.
 
 ## Objetivo
 
