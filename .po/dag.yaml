@@ -145,3 +145,8 @@ tickets:
   status: done
   depends_on:
   - KORP-040
+- id: KORP-042
+  title: Helm e observabilidade Kubernetes LGTM
+  status: planned
+  depends_on:
+  - KORP-041
