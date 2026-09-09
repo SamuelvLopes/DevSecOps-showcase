@@ -8,8 +8,8 @@ Prometheus, Grafana, Ansible, workflows e governança de PR.
 ## Resultado
 
 Nenhum bloqueio crítico foi identificado nesta revisão. Os controles existentes
-cobrem o cenário local do desafio e deixam pendências explícitas para validação
-final em VM limpa.
+cobrem o cenário local do desafio. A validação em VM limpa pode ser executada
+com Ansible diretamente ou com os exemplos Terraform opcionais para AWS/Azure.
 
 ## Achados e controles
 
@@ -28,12 +28,12 @@ final em VM limpa.
 | Segurança | Gates automatizados | `govulncheck`, Trivy e GitGuardian em PR |
 | Governança | Mudança revisável por ticket | GitFlow, PR por ticket e template com checklist de segurança |
 
-## Pendências aceitas antes da release
+## Pendências operacionais para uso remoto
 
-- Validar o playbook em VM limpa com Docker instalado pelo Ansible.
+- Executar o playbook em VM limpa quando houver host alvo disponível.
 - Gerar senha administrativa de Grafana fora do padrão local antes de uso remoto.
 - Aplicar branch protection no GitHub conforme `docs/github-governance.md`.
-- Registrar evidências finais de release com os comandos executados e respostas.
+- Registrar evidências de execução remota com Terraform output, Ansible output e resposta HTTP.
 
 ## Checklist para revisão futura
 

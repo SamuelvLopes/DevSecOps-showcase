@@ -33,10 +33,10 @@ na rede Docker, Prometheus coleta `/metrics` e Grafana lê Prometheus.
 | Spoofing | Acesso indevido a Prometheus/Grafana | Publicação em `127.0.0.1`; acesso por túnel SSH quando remoto | Senha Grafana gerada no provisionamento final |
 | Tampering | Alteração de configuração em runtime | Mounts de NGINX, Prometheus e Grafana como read-only | Validar permissões na VM limpa |
 | Tampering | Mudança insegura entrando por PR | CI, gates de segurança, GitGuardian e governança documentada | Branch protection aplicada no GitHub |
-| Repudiation | Falta de rastreio de mudanças | GitFlow, PR por ticket e tickets com evidência | Release final com tag anotada |
+| Repudiation | Falta de rastreio de mudanças | GitFlow, PR por ticket, tickets com evidência e release com tag anotada | Branch protection aplicada no GitHub |
 | Information disclosure | Exposição de dados em logs/métricas | Logs não registram corpo; métricas sem IP, query string, user-agent ou payload | Revisão antes da entrega final |
 | Denial of service | Cliente lento ou conexões ociosas | Timeouts HTTP e NGINX como entrada | Rate limit não implementado |
-| Denial of service | Crescimento de cardinalidade em métricas | Labels de rota controladas; desconhecidas viram `unknown` | Validar sob carga curta |
+| Denial of service | Crescimento de cardinalidade em métricas | Labels de rota controladas; desconhecidas viram `unknown`; validação sob carga curta | Rate limit fora do escopo local |
 | Elevation of privilege | Container com privilégios excessivos | App non-root, `scratch`, `read_only`, `cap_drop: ALL`, `no-new-privileges` | Avaliar hardening semelhante para serviços de terceiros |
 | Elevation of privilege | Segredos ou permissões excessivas em CI | Workflows com `contents: read`; sem secrets | Proteções remotas documentadas |
 
@@ -54,5 +54,5 @@ na rede Docker, Prometheus coleta `/metrics` e Grafana lê Prometheus.
 
 - `make check`
 - `make compose-smoke`
-- GitHub Actions: CI, security gates e GitGuardian
+- GitHub Actions: CI, security gates, Terraform validate e GitGuardian
 - [Security review](security-review.md)

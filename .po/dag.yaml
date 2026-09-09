@@ -1,5 +1,5 @@
 version: 1
-scope: Core oficial + qualidade; extensões adiadas
+scope: Core oficial + qualidade; extensões opcionais documentadas
 tickets:
 - id: KORP-001
   title: Bootstrap, governança e arquitetura
@@ -136,7 +136,22 @@ tickets:
   - KORP-037
 - id: KORP-040
   title: Release final e envio
-  status: in_review
+  status: done
   depends_on:
   - KORP-037
   - KORP-039
+- id: KORP-041
+  title: Terraform cloud VM AWS/Azure
+  status: done
+  depends_on:
+  - KORP-040
+- id: KORP-042
+  title: Helm e observabilidade Kubernetes LGTM
+  status: planned
+  depends_on:
+  - KORP-041
+- id: KORP-043
+  title: Release v1.0.1 Terraform cloud VM
+  status: in_review
+  depends_on:
+  - KORP-041

@@ -3,8 +3,10 @@
 Implementação incremental do desafio técnico Korp: Go, Docker Compose, NGINX,
 Prometheus, Grafana e provisionamento Ansible em Linux.
 
-Status: core Compose implementado, observado e validado por CI. A validação em
-VM limpa via Ansible é a próxima etapa antes da release final.
+Status: core Compose validado por CI e publicado na release v1.0.0. A trilha
+Terraform adiciona exemplos executáveis para provisionar VM Ubuntu em AWS ou
+Azure e usar o playbook Ansible em ambiente limpo quando as credenciais do
+provedor estiverem configuradas.
 
 ## Entrega
 
@@ -82,10 +84,13 @@ make compose-load
 make compose-recovery
 make clean-checkout
 make ansible-syntax
+make terraform-fmt
+make terraform-validate
 ```
 
 Requer Go 1.27.1 ou superior, Git, GNU Make, Docker e Docker Compose. Ansible é
-necessário apenas para o provisionamento remoto.
+necessário apenas para o provisionamento remoto. Terraform é necessário apenas
+para os exemplos opcionais de AWS/Azure.
 
 O Compose cria a rede bridge `projeto-korp` e mantém a aplicação sem porta
 publicada no host. O NGINX publica `80:80` e encaminha para `app:8080`.
@@ -104,4 +109,4 @@ Pull requests para `develop` e `main` executam CI com testes Go, build Docker e
 validação Compose. Gates de segurança executam `govulncheck` e scan de imagem.
 O smoke Compose valida HTTP, Prometheus e Grafana no fluxo completo. Carga curta
 com k6 e demo de recuperação também rodam em CI.
-Kubernetes e cloud são extensões futuras e não condicionam a entrega Compose/Ansible.
+Kubernetes e cloud são extensões opcionais e não condicionam a entrega Compose/Ansible. Os exemplos Terraform para AWS e Azure em [`docs/terraform-cloud.md`](docs/terraform-cloud.md) provisionam uma VM Ubuntu para uso com Ansible; os arquivos de output em `docs/examples` são apenas amostras do formato esperado.
