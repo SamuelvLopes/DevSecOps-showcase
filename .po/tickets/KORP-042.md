@@ -1,6 +1,6 @@
 # KORP-042 — Helm chart da aplicação
 
-Status: planned. Risco: médio. Depende de KORP-041.
+Status: done. Risco: médio. Depende de KORP-041.
 
 ## Objetivo
 
@@ -15,10 +15,10 @@ do NGINX, probes, recursos mínimos e valores para imagem/tag.
 
 ## Aceite e verificação
 
-- [ ] Chart Helm versionado.
-- [ ] `helm lint` passa no CI.
-- [ ] `helm template` gera manifests válidos.
-- [ ] Documentação mostra instalação, upgrade e remoção.
+- [x] Chart Helm versionado.
+- [x] `helm lint` passa via `make helm-lint`.
+- [x] `helm template` gera manifests em `/tmp/projeto-korp-rendered.yaml`.
+- [x] Documentação mostra instalação, upgrade, port-forward e remoção.
 
 ## Segurança, observabilidade e recuperação
 
@@ -27,4 +27,5 @@ ponto de entrada HTTP. Recursos e probes devem favorecer rollback simples.
 
 ## Evidências
 
-Pendentes para a implementação do ticket.
+- `charts/projeto-korp` contém Deployment/Service da aplicação, ConfigMap/Deployment/Service do NGINX e ServiceMonitor.
+- `.github/workflows/kubernetes.yml` valida lint e template.

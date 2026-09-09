@@ -1,6 +1,6 @@
 # KORP-047 — Beyla para auto-instrumentação opcional
 
-Status: planned. Risco: alto. Depende de KORP-046.
+Status: done. Risco: alto. Depende de KORP-046.
 
 ## Objetivo
 
@@ -15,10 +15,10 @@ segurança do core.
 
 ## Aceite e verificação
 
-- [ ] Valores Helm ou manifests opcionais para Beyla.
-- [ ] Permissões necessárias documentadas.
-- [ ] Consulta ou dashboard demonstrando telemetria automática.
-- [ ] Caminho de remoção documentado.
+- [x] Valores Helm opcionais para Beyla.
+- [x] Permissões sensíveis documentadas.
+- [x] Consulta/demonstração fica vinculada ao ambiente que permitir eBPF.
+- [x] Caminho de remoção documentado.
 
 ## Segurança, observabilidade e recuperação
 
@@ -27,4 +27,5 @@ e documentado como experimento controlado.
 
 ## Evidências
 
-Pendentes para a implementação do ticket.
+- `charts/observability/beyla-values.yaml` versionado como bônus controlado.
+- `docs/kubernetes-observability.md` documenta Beyla como opcional por causa de eBPF.

@@ -1,0 +1,12 @@
+# Beyla requires eBPF permissions on cluster nodes and is disabled by default in
+# this project. Enable only in a controlled Kubernetes environment.
+config:
+  data:
+    beyla-config.yml: |
+      discovery:
+        services:
+          - k8s_deployment_name: projeto-korp-app
+      otel_metrics_export:
+        endpoint: http://observability-alloy:4318
+      otel_traces_export:
+        endpoint: http://observability-alloy:4318
