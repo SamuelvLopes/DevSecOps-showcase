@@ -1,3 +1,18 @@
+# Release v1.2.3
+
+## Escopo
+
+Release patch documental para manter o README alinhado com a release publicada:
+
+- versão atual no topo do README corrigida para `v1.2.3`;
+- core Compose/Ansible, Terraform e Kubernetes permanecem inalterados.
+
+## Validação
+
+A PR documental passou na esteira completa: Go quality, Docker and Compose, Compose smoke, Compose load observability, Compose recovery demo, Demo evidence, Helm chart, Terraform examples, vulnerability scans e GitGuardian.
+
+---
+
 # Release v1.2.2
 
 ## Escopo

@@ -264,3 +264,9 @@ tickets:
   status: in_review
   depends_on:
   - KORP-060
+
+- id: KORP-062
+  title: Release v1.2.3 README com versão atual
+  status: in_review
+  depends_on:
+  - KORP-061
