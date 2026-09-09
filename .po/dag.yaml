@@ -146,8 +146,8 @@ tickets:
   depends_on:
   - KORP-040
 - id: KORP-042
-  title: Helm e observabilidade Kubernetes LGTM
-  status: planned
+  title: Helm chart da aplicação
+  status: done
   depends_on:
   - KORP-041
 - id: KORP-043
@@ -155,3 +155,32 @@ tickets:
   status: done
   depends_on:
   - KORP-041
+- id: KORP-044
+  title: kube-prometheus-stack e ServiceMonitor
+  status: done
+  depends_on:
+  - KORP-042
+- id: KORP-045
+  title: Loki e Alloy para logs Kubernetes
+  status: done
+  depends_on:
+  - KORP-044
+- id: KORP-046
+  title: Tempo e OpenTelemetry na aplicação Go
+  status: done
+  depends_on:
+  - KORP-042
+- id: KORP-047
+  title: Beyla para auto-instrumentação opcional
+  status: done
+  depends_on:
+  - KORP-046
+- id: KORP-048
+  title: Release v1.1.0 Kubernetes observability
+  status: in_review
+  depends_on:
+  - KORP-042
+  - KORP-044
+  - KORP-045
+  - KORP-046
+  - KORP-047

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: projeto-korp
+description: Helm chart for the Projeto Korp HTTP service and NGINX entrypoint.
+type: application
+version: 0.1.0
+appVersion: "1.0.1"

@@ -1,0 +1,43 @@
+image:
+  repository: ghcr.io/samuelvlopes/devsecops-showcase/http-server-projeto-korp
+  tag: v1.0.1
+  pullPolicy: IfNotPresent
+
+app:
+  replicas: 1
+  port: 8080
+  otel:
+    enabled: false
+    endpoint: http://observability-alloy:4318
+    serviceName: http-server-projeto-korp
+
+nginx:
+  replicas: 1
+  image:
+    repository: nginx
+    tag: 1.27-alpine
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+
+serviceMonitor:
+  enabled: true
+  interval: 15s
+  scrapeTimeout: 5s
+
+resources:
+  app:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+  nginx:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
