@@ -1,6 +1,6 @@
 # KORP-041 — Exemplos Terraform AWS/Azure para VM limpa
 
-Status: in_review. Risco: médio. Depende de KORP-040.
+Status: done. Risco: médio. Depende de KORP-040.
 
 ## Objetivo
 
@@ -33,8 +33,7 @@ a demonstração.
 
 ## Evidências
 
-- `terraform fmt -check -recursive terraform`: pendente no CI quando Terraform
-  estiver disponível.
-- `terraform validate`: pendente no CI quando providers forem inicializados.
-- Execução real em cloud depende das credenciais do operador e não exige segredo
-  versionado.
+- `terraform fmt -check -recursive terraform`: passou localmente via `hashicorp/terraform:1.9.8` e no CI.
+- `terraform validate`: passou para AWS e Azure localmente via `hashicorp/terraform:1.9.8` e no CI.
+- GitHub Actions da PR #31: Terraform examples, Go quality, Docker and Compose, Compose smoke, Compose load observability, Compose recovery demo, govulncheck, Trivy e GitGuardian passaram.
+- Execução real em cloud depende das credenciais do operador e não exige segredo versionado.
