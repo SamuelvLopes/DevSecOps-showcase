@@ -1,6 +1,6 @@
 # KORP-045 — Loki e Alloy para logs Kubernetes
 
-Status: planned. Risco: médio. Depende de KORP-044.
+Status: done. Risco: médio. Depende de KORP-044.
 
 ## Objetivo
 
@@ -15,10 +15,10 @@ sensíveis e aproveitar os logs JSON da aplicação.
 
 ## Aceite e verificação
 
-- [ ] Valores Helm para Loki.
-- [ ] Configuração Alloy para coletar logs de pods.
-- [ ] Consulta LogQL documentada para a aplicação.
-- [ ] CI valida templates.
+- [x] Valores Helm para Loki.
+- [x] Configuração Alloy para coletar logs de pods.
+- [x] Consulta LogQL documentada para a aplicação.
+- [x] CI valida templates da aplicação.
 
 ## Segurança, observabilidade e recuperação
 
@@ -27,4 +27,5 @@ string, IP, user-agent ou headers sensíveis.
 
 ## Evidências
 
-Pendentes para a implementação do ticket.
+- `charts/observability/loki-values.yaml` e `alloy-values.yaml` versionados.
+- `docs/kubernetes-observability.md` documenta Loki, Alloy e LogQL.

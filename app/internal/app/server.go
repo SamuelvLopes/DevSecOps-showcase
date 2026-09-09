@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/SamuelvLopes/DevSecOps-showcase/app/internal/server"
+	"github.com/SamuelvLopes/DevSecOps-showcase/app/internal/telemetry"
 )
 
 const (
@@ -42,7 +43,19 @@ func Run(ctx context.Context, logger *slog.Logger, address string) error {
 		logger = slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	}
 
-	httpServer := NewHTTPServer(address, server.NewHandler())
+	telemetryShutdown, err := telemetry.Start(ctx, logger)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		shutdownCtx, cancel := context.WithTimeout(context.Background(), defaultShutdownTimeout)
+		defer cancel()
+		if err := telemetry.Shutdown(shutdownCtx, telemetryShutdown); err != nil {
+			logger.Warn("opentelemetry shutdown failed", "error", err)
+		}
+	}()
+
+	httpServer := NewHTTPServer(address, telemetry.WrapHandler(server.NewHandler()))
 	errCh := make(chan error, 1)
 
 	go func() {

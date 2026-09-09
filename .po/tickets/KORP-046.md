@@ -1,6 +1,6 @@
 # KORP-046 — Tempo e OpenTelemetry na aplicação Go
 
-Status: planned. Risco: médio. Depende de KORP-042.
+Status: done. Risco: médio. Depende de KORP-042.
 
 ## Objetivo
 
@@ -15,11 +15,11 @@ backend de tracing.
 
 ## Aceite e verificação
 
-- [ ] Bootstrap OpenTelemetry na aplicação.
-- [ ] Variáveis de ambiente para habilitar OTLP.
-- [ ] Valores Helm para Tempo.
-- [ ] Documentação de consulta de trace no Grafana.
-- [ ] Testes Go continuam verdes.
+- [x] Bootstrap OpenTelemetry na aplicação.
+- [x] Variáveis de ambiente para habilitar OTLP.
+- [x] Valores Helm para Tempo.
+- [x] Documentação de consulta/uso de trace no Grafana.
+- [x] Testes Go continuam verdes.
 
 ## Segurança, observabilidade e recuperação
 
@@ -28,4 +28,6 @@ sensíveis. Falha de exportação de trace não pode derrubar o endpoint.
 
 ## Evidências
 
-Pendentes para a implementação do ticket.
+- `app/internal/telemetry` adiciona bootstrap opt-in de OpenTelemetry.
+- `charts/observability/tempo-values.yaml` versionado.
+- Chart injeta `OTEL_TRACES_ENABLED`, `OTEL_EXPORTER_OTLP_ENDPOINT` e `OTEL_SERVICE_NAME` quando habilitado.

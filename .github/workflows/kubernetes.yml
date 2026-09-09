@@ -1,0 +1,28 @@
+name: Kubernetes
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+  push:
+    branches:
+      - develop
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  helm:
+    name: Helm chart
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Lint application chart
+        run: make helm-lint
+
+      - name: Render application chart
+        run: make helm-template

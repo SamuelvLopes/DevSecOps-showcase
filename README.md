@@ -27,6 +27,7 @@ executa Compose e valida HTTP, Prometheus e Grafana.
 - [Runbook](docs/runbook.md)
 - [Demo](docs/demo.md)
 - [Technical walkthrough](docs/technical-walkthrough.md)
+- [Kubernetes observability](docs/kubernetes-observability.md)
 - [Teste de carga e observabilidade](scripts/load-observability.sh)
 - [Demo de recuperação](scripts/recovery-demo.sh)
 - [Validação de checkout limpo](scripts/clean-checkout-validation.sh)
@@ -86,6 +87,8 @@ make clean-checkout
 make ansible-syntax
 make terraform-fmt
 make terraform-validate
+make helm-lint
+make helm-template
 ```
 
 Requer Go 1.27.1 ou superior, Git, GNU Make, Docker e Docker Compose. Ansible é
@@ -109,4 +112,4 @@ Pull requests para `develop` e `main` executam CI com testes Go, build Docker e
 validação Compose. Gates de segurança executam `govulncheck` e scan de imagem.
 O smoke Compose valida HTTP, Prometheus e Grafana no fluxo completo. Carga curta
 com k6 e demo de recuperação também rodam em CI.
-Kubernetes e cloud são extensões opcionais e não condicionam a entrega Compose/Ansible. Os exemplos Terraform para AWS e Azure em [`docs/terraform-cloud.md`](docs/terraform-cloud.md) provisionam uma VM Ubuntu para uso com Ansible; os arquivos de output em `docs/examples` são apenas amostras do formato esperado.
+Kubernetes e cloud são extensões opcionais e não condicionam a entrega Compose/Ansible. Terraform para AWS e Azure em [`docs/terraform-cloud.md`](docs/terraform-cloud.md) provisiona uma VM Ubuntu para uso com Ansible. A trilha Kubernetes em [`docs/kubernetes-observability.md`](docs/kubernetes-observability.md) adiciona Helm, ServiceMonitor, Loki, Tempo, Alloy e OpenTelemetry.
