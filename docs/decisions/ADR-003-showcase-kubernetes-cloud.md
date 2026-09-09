@@ -1,19 +1,25 @@
-# ADR-003 — Kubernetes e cloud como extensões futuras
+# ADR-003 — Kubernetes e cloud como extensões opcionais
 
-Status: aceito para implementação. Data: 2026-09-08.
+Status: aceito para implementação incremental. Data: 2026-09-08.
 
 ## Contexto e decisão
 
-O backlog original inclui Helm, Kubernetes, Terraform e cloud. A entrega atual
-prioriza requisitos oficiais, qualidade, segurança, automação e evidências.
-Essas extensões ficam adiadas e não bloqueiam a versão final do core.
+O backlog original inclui Helm, Kubernetes, Terraform e cloud. A entrega core
+continua baseada em Docker Compose e Ansible porque esse é o caminho diretamente
+alinhado ao enunciado. Cloud e Kubernetes entram como extensões opcionais com
+aceite próprio.
+
+A primeira extensão aceita é Terraform para VM Ubuntu em AWS e Azure. Terraform
+provisiona infraestrutura e retorna outputs para o Ansible; o deploy da aplicação
+continua no playbook.
 
 ## Alternativa e consequências
 
-Implementar todas as trilhas aumentaria amplitude e tempo de validação. A escolha
-atual concentra esforço em validar o provisionamento e a operação do core.
+Criar um cluster Kubernetes completo aumentaria custo, tempo e superfície de
+falha. Uma VM por Terraform prova infraestrutura como código em ambiente limpo e
+preserva a simplicidade operacional do desafio.
 
 ## Critério para reconsiderar
 
-Core validado em VM limpa, CI verde e documentação reproduzível. Uma extensão
-deve ter objetivo, aceite e evidência próprios.
+Helm ou Kubernetes podem ser adicionados depois que a trilha de VM estiver
+validada, com CI verde e documentação reproduzível.

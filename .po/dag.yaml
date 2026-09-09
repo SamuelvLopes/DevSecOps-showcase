@@ -1,5 +1,5 @@
 version: 1
-scope: Core oficial + qualidade; extensões adiadas
+scope: Core oficial + qualidade; extensões opcionais documentadas
 tickets:
 - id: KORP-001
   title: Bootstrap, governança e arquitetura
@@ -140,3 +140,8 @@ tickets:
   depends_on:
   - KORP-037
   - KORP-039
+- id: KORP-041
+  title: Exemplos Terraform AWS/Azure para VM limpa
+  status: in_review
+  depends_on:
+  - KORP-040

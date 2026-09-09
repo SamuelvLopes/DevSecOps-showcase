@@ -1,0 +1,8 @@
+# Sample output format for documentation. Replace with actual output after a real Terraform run.
+
+public_ip = "203.0.113.41"
+ssh_user = "ubuntu"
+ansible_inventory = <<EOT
+[korp]
+203.0.113.41 ansible_user=ubuntu
+EOT
