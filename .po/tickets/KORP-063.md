@@ -17,6 +17,7 @@ Explicitar no README como a entrega percorre o ciclo DevOps e quais referências
 - [x] README possui seção sobre ciclo DevOps.
 - [x] README cita referências ISO/IEC sem alegar certificação.
 - [x] Links e arquivos referenciados já existem no repo.
+- [x] Security workflow evita o mirror instável do Trivy DB e usa GHCR.
 - [ ] PR integrada em `develop`.
 - [ ] Release patch promovida para `main`.
 
@@ -29,4 +30,4 @@ rg -n "Ciclo DevOps|ISO/IEC" README.md
 
 ## Segurança e recuperação
 
-Mudança documental. Reversão é o revert do commit.
+Mudança documental com ajuste de confiabilidade no gate de segurança. Reversão é o revert do commit.
