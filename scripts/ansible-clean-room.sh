@@ -15,6 +15,20 @@ CONTROL_DOCKERFILE="${ROOT_DIR}/tests/clean-room/control-node.Dockerfile"
 # KORP_CLEAN_ROOM_LOCAL_ANSIBLE=1 usa o Ansible do host.
 USE_LOCAL_ANSIBLE="${KORP_CLEAN_ROOM_LOCAL_ANSIBLE:-0}"
 
+require_docker() {
+  if ! command -v docker >/dev/null 2>&1; then
+    echo "Docker is required to run the clean-room validation." >&2
+    echo "Install Docker Engine with the Compose plugin, then run: make ansible-clean-room-test" >&2
+    return 1
+  fi
+
+  if ! docker info >/dev/null 2>&1; then
+    echo "Docker is installed, but the daemon is not reachable by this user." >&2
+    echo "Start Docker and confirm this user can run: docker info" >&2
+    return 1
+  fi
+}
+
 ensure_key() {
   mkdir -p "${STATE_DIR}"
   if [[ ! -f "${KEY_FILE}" ]]; then
@@ -23,6 +37,8 @@ ensure_key() {
 }
 
 build_control_node() {
+  require_docker
+
   docker build \
     -t "${CONTROL_IMAGE}" \
     -f "${CONTROL_DOCKERFILE}" \
@@ -87,6 +103,7 @@ wait_for_ssh() {
 }
 
 up() {
+  require_docker
   ensure_key
 
   docker build \
@@ -126,6 +143,8 @@ provision() {
 }
 
 validate() {
+  require_docker
+
   curl --fail --silent --show-error "http://127.0.0.1:${HTTP_PORT}/projeto-korp"
   echo
 
@@ -169,6 +188,8 @@ test_all() {
 }
 
 down() {
+  require_docker
+
   docker rm -f "${CONTAINER_NAME}" >/dev/null 2>&1 || true
 }
 

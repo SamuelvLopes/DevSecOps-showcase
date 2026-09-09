@@ -288,3 +288,9 @@ tickets:
   status: done
   depends_on:
   - KORP-064
+
+- id: KORP-066
+  title: Comando do enunciado destacado no README
+  status: done
+  depends_on:
+  - KORP-065
