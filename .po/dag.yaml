@@ -231,3 +231,8 @@ tickets:
   depends_on:
   - KORP-004
   - KORP-009
+- id: KORP-057
+  title: Control node conteinerizado e storage driver do clean-room
+  status: in_review
+  depends_on:
+  - KORP-055

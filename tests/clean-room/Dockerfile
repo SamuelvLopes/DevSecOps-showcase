@@ -13,6 +13,13 @@ RUN apt-get update \
         systemd-sysv \
     && rm -rf /var/lib/apt/lists/*
 
+# BuildKit nao consegue montar overlayfs aninhado dentro do DinB neste tipo de
+# host: `docker build` falha com
+#   failed to solve: mount source: "overlay" ... fstype: overlay
+# vfs funciona em qualquer aninhamento, a custo de velocidade. E uma concessao
+# do harness de clean-room, nao da entrega: em VM real o driver padrao vale.
+COPY daemon.json /etc/docker/daemon.json
+
 RUN useradd --create-home --shell /bin/bash ansible \
     && install -d -m 0700 -o ansible -g ansible /home/ansible/.ssh \
     && printf '%s\n' 'ansible ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/ansible \
