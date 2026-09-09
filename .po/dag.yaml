@@ -177,7 +177,7 @@ tickets:
   - KORP-046
 - id: KORP-048
   title: Release v1.1.0 Kubernetes observability
-  status: in_review
+  status: done
   depends_on:
   - KORP-042
   - KORP-044
