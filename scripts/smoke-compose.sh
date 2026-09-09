@@ -133,11 +133,29 @@ with open(sys.argv[1], encoding="utf-8") as fh:
     payload = json.load(fh)
 
 dashboard = payload["dashboard"]
-panel_titles = sorted(panel["title"] for panel in dashboard["panels"])
+panels = dashboard["panels"]
+panel_titles = {panel["title"] for panel in panels}
 if dashboard["title"] != "Projeto Korp":
     raise SystemExit("Grafana dashboard title is unexpected")
-if panel_titles != ["Disponibilidade da aplicacao", "Volume de requisicoes"]:
-    raise SystemExit(f"unexpected Grafana panels: {panel_titles}")
+
+# The two panels the challenge requires must always be there by name.
+missing = {"Disponibilidade da aplicacao", "Volume de requisicoes"} - panel_titles
+if missing:
+    raise SystemExit(f"missing required Grafana panels: {sorted(missing)}")
+
+# Every panel must query a metric the application actually exposes, so a panel
+# can never ship pointing at a series that does not exist.
+exposed = (
+    "projeto_korp_up",
+    "projeto_korp_http_requests_total",
+    "projeto_korp_http_request_duration_seconds",
+    'up{job="http-server-projeto-korp"}',
+)
+for panel in panels:
+    for target in panel.get("targets", []):
+        expr = target.get("expr", "")
+        if not any(metric in expr for metric in exposed):
+            raise SystemExit(f"panel {panel['title']!r} queries unknown metric: {expr!r}")
 PY
 
 app_id="$(docker compose ps -q app)"

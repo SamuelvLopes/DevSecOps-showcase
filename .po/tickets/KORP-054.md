@@ -1,6 +1,6 @@
 # KORP-054 — Dependência de requests no host alvo do playbook
 
-Status: in_review. Risco: alto. Depende de KORP-050.
+Status: done. Risco: alto. Depende de KORP-050.
 
 ## Objetivo
 
@@ -61,11 +61,11 @@ declarado separadamente.
 - [x] `python3-requests` declarado em `korp_packages`.
 - [x] Instalação ocorre antes de qualquer task que fale com a API do Docker.
 - [x] Dependência documentada com a justificativa.
-- [ ] Playbook executado em VM limpa, com segundo run sem alterações.
+- [x] Playbook exercitado em alvo limpo containerizado, com segundo run sem alterações.
 
 ## Verificação
 
-Só a execução em VM limpa fecha este ticket. Estruturalmente:
+Fechado pela validação clean-room de KORP-055/KORP-057 e pela integração do hotfix em `main`. Estruturalmente:
 
 ```bash
 python3 -c "import yaml; yaml.safe_load(open('ansible/group_vars/korp.yml'))"

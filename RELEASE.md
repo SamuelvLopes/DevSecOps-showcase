@@ -1,3 +1,40 @@
+# Release v1.2.1
+
+## Escopo
+
+Release patch de fechamento para envio da entrega:
+
+- README com evidências reais exibidas diretamente: dashboard Grafana, saída de `make demo` e validação clean-room Ansible;
+- screenshot versionado do dashboard Grafana sob carga;
+- fechamento dos tickets KORP-054, KORP-056, KORP-057 e KORP-058;
+- nenhum comportamento de runtime alterado em relação ao estado já validado em `develop`, exceto ajuste visual de casas decimais no painel `Latencia P95`.
+
+## Validação
+
+Validações remotas executadas na PR de evidências:
+
+- `Go quality`;
+- `Docker and Compose`;
+- `Compose smoke`;
+- `Compose load observability`;
+- `Compose recovery demo`;
+- `Demo evidence`;
+- `Helm chart`;
+- `Terraform examples`;
+- `Go vulnerability scan`;
+- `Image vulnerability scan`;
+- `GitGuardian Security Checks`.
+
+## Uso rápido
+
+```bash
+make compose-up
+curl http://localhost:80/projeto-korp
+make compose-down
+```
+
+---
+
 # Release v1.2.0
 
 ## Escopo

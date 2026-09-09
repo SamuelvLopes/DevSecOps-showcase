@@ -1,6 +1,6 @@
 # KORP-053 — Release v1.2.0 e sincronização de main
 
-Status: in_review. Risco: médio. Depende de KORP-049, KORP-050, KORP-051 e KORP-052.
+Status: done. Risco: médio. Depende de KORP-049, KORP-050, KORP-051 e KORP-052.
 
 ## Objetivo
 
@@ -44,12 +44,12 @@ documentação, nenhuma delas quebra compatibilidade.
 - [x] `RELEASE.md` com a seção da v1.2.0.
 - [x] README declarando a release atual corretamente.
 - [x] `appVersion` do chart coerente com a release.
-- [ ] PR de `release/v1.2.0` para `main` com CI verde.
-- [ ] Merge em `main`.
-- [ ] Tag anotada `v1.2.0` publicada.
-- [ ] GitHub release criada a partir da tag.
-- [ ] `develop` sincronizado com `main` após a release.
-- [ ] Imagem `v1.2.0` publicada no GHCR pelo workflow de tag.
+- [x] PR de `release/v1.2.0` para `main` com CI verde.
+- [x] Merge em `main`.
+- [x] Tag anotada `v1.2.0` publicada.
+- [x] GitHub release criada a partir da tag.
+- [x] `develop` sincronizado com `main` após a release.
+- [x] Imagem `v1.2.0` publicada no GHCR pelo workflow de tag.
 
 ## Verificação
 
@@ -63,6 +63,21 @@ docker pull ghcr.io/samuelvlopes/devsecops-showcase/http-server-projeto-korp:v1.
 
 Badges do README passam a refletir a CI do branch default com o conteúdo
 entregue.
+
+## Verification results
+
+Executado e conferido:
+
+- PR #52 de `release/v1.2.0` para `main`, 12/12 checks verdes;
+- merge em `main`: `5408c2e`;
+- tag anotada `v1.2.0` apontando para `5408c2e`, confirmada como ancestral de
+  `main`;
+- GitHub release `v1.2.0` publicada e marcada como Latest;
+- `develop` sincronizado por fast-forward, idêntico a `main` em `5408c2e`;
+- workflow `Container Image` verde nos gatilhos de `main` e da tag `v1.2.0`;
+- `docker pull` da imagem `v1.2.0` no GHCR funcionando;
+- workflows `CI`, `Security`, `Kubernetes` e `Terraform` verdes em `main`,
+  o que torna os badges do README representativos da entrega.
 
 ## Segurança e recuperação
 

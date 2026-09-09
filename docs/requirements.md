@@ -15,8 +15,8 @@ verificações. Quando a evidência depender de VM limpa, isso fica indicado.
 | Rede bridge; aplicação sem porta publicada | `compose.yaml`, `ansible/roles/stack`; KORP-006/050 | `docker compose config`, inspeção no smoke e task explícita de rede no playbook |
 | NGINX oficial; host 80 → container 80; volume /etc/nginx/conf.d/ | `compose.yaml`, `nginx/`; KORP-007 | Curl pela porta 80 e mount read-only |
 | Arquivo http-server-projeto-korp.conf com proxy para app:8080 | `nginx/http-server-projeto-korp.conf`; KORP-007 | Resposta pelo proxy e DNS interno |
-| Disponibilidade e volume em padrão Prometheus | `app/internal/metrics`, `prometheus/`; KORP-004/008 | Scrape UP e contador após requisições |
-| Prometheus e Grafana no Compose; dashboard funcional | `prometheus/`, `grafana/`; KORP-008/009 | APIs Prometheus/Grafana e dashboard por UID |
+| Disponibilidade e volume em padrão Prometheus | `app/internal/metrics`, `prometheus/`; KORP-004/008/056 | Scrape UP, contador após requisições e histograma de duração |
+| Prometheus e Grafana no Compose; dashboard funcional | `prometheus/`, `grafana/`; KORP-008/009/056 | APIs Prometheus/Grafana, dashboard por UID e checagem de que toda query aponta para métrica exposta |
 | Um comando Ansible provisiona as partes 1 e 2 | `ansible/site.yml`; KORP-011–013 | Playbook implementado; execução final em KORP-037 |
 | Playbook valida HTTP e imprime resposta | `ansible/roles/validate`; KORP-013 | Validações versionadas; execução final em KORP-037 |
 | Repositório público e demonstração técnica | `README.md`, `docs/`, `.po/`; KORP-035–040 | Runbook, demo e release final |
@@ -26,6 +26,7 @@ verificações. Quando a evidência depender de VM limpa, isso fica indicado.
 - Grafana provisionado automaticamente (bônus explícito do enunciado).
 - Testes de contrato/concorrência, health, logs, timeouts e shutdown gracioso.
 - Latência, taxa, erros e cardinalidade controlada; probes fora do volume principal.
+- Dashboard RED com oito painéis, todos validados contra métricas expostas.
 - Runtime non-root, read-only e mínimo privilégio; interfaces administrativas em loopback.
 - Ansible por roles, mudanças condicionais e segundo run sem alterações desnecessárias.
 - CI integrada, scans bloqueantes, carga curta e demonstração de recuperação.
