@@ -1,6 +1,11 @@
 korp_project_dir: /opt/projeto-korp
 korp_repo_src: "{{ playbook_dir }}/.."
 korp_compose_file: "{{ korp_project_dir }}/compose.yaml"
+korp_compose_project: projeto-korp
+korp_network_name: projeto-korp
+korp_network_labels:
+  com.docker.compose.network: "{{ korp_network_name }}"
+  com.docker.compose.project: "{{ korp_compose_project }}"
 korp_http_url: http://localhost/projeto-korp
 korp_prometheus_url: http://127.0.0.1:9090
 korp_grafana_url: http://127.0.0.1:3000
