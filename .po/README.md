@@ -31,3 +31,4 @@ aceite atendidos, verificação registrada e revisão da mudança.
 - [KORP-036 — Demo script e evidências](tickets/KORP-036.md)
 - [KORP-037 — Clean-room validation](tickets/KORP-037.md)
 - [KORP-039 — Ensaio técnico/oral](tickets/KORP-039.md)
+- [KORP-040 — Release final e envio](tickets/KORP-040.md)

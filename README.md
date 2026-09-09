@@ -18,6 +18,7 @@ executa Compose e valida HTTP, Prometheus e Grafana.
 ## Navegação
 
 - [Requisitos e critérios de aceite](docs/requirements.md)
+- [Release v1.0.0](RELEASE.md)
 - [Arquitetura e limites](docs/architecture.md)
 - [Threat model STRIDE](docs/threat-model.md)
 - [Security review](docs/security-review.md)
