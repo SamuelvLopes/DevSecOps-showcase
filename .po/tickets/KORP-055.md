@@ -1,6 +1,6 @@
 # Ticket: KORP-055 — Clean-room Ansible com Ubuntu em Docker/DinD
 
-Status: in_review. Risco: alto. Depende de KORP-013 e KORP-050.
+Status: done. Risco: alto. Depende de KORP-013 e KORP-050.
 
 ## Objective
 
@@ -96,19 +96,19 @@ Alvo de referência: Ubuntu 24.04 LTS em arquitetura amd64. Suporte a outras dis
 
 - [x] Existe uma imagem Ubuntu 24.04 de clean-room versionada no repositório.
 - [x] A imagem não contém Docker Engine ou Docker Compose pré-instalados.
-- [ ] O alvo sobe de forma descartável com SSH, Python e sudo funcionais.
-- [ ] `ansible -m ping` alcança o alvo.
-- [ ] Uma única invocação de `ansible-playbook` provisiona Docker, rede, aplicação e observabilidade.
-- [ ] O playbook conclui com `failed=0` e `unreachable=0`.
-- [ ] O endpoint `/projeto-korp` responde corretamente via NGINX.
-- [ ] `localhost:8080` não expõe a aplicação diretamente.
-- [ ] Prometheus reporta a aplicação como disponível.
-- [ ] Grafana responde saudável e mantém provisioning esperado.
-- [ ] Uma segunda execução do playbook demonstra idempotência real e não apenas `changed_when: false` artificial.
+- [x] O alvo sobe de forma descartável com SSH, Python e sudo funcionais.
+- [x] `ansible -m ping` alcança o alvo.
+- [x] Uma única invocação de `ansible-playbook` provisiona Docker, rede, aplicação e observabilidade.
+- [x] O playbook conclui com `failed=0` e `unreachable=0`.
+- [x] O endpoint `/projeto-korp` responde corretamente via NGINX.
+- [x] `localhost:8080` não expõe a aplicação diretamente.
+- [x] Prometheus reporta a aplicação como disponível.
+- [x] Grafana responde saudável e mantém provisioning esperado.
+- [x] Uma segunda execução do playbook demonstra idempotência real e não apenas `changed_when: false` artificial.
 - [x] O ambiente pode ser criado/removido por comandos versionados no Makefile/script.
 - [x] README/docs deixam explícito que DinD é clean-room automatizado e que VM continua sendo validação mais fiel de host real.
-- [ ] Workflow de build da imagem validado verde na PR.
-- [ ] Imagem GHCR confirmada acessível após merge em `develop`/`main`.
+- [x] Workflow de build da imagem validado verde na PR.
+- [x] Imagem GHCR confirmada acessível após merge em `develop`/`main`.
 
 ## Verification
 
@@ -141,6 +141,47 @@ build clean-room Ubuntu
 → ansible-playbook (segunda execução)
 → checks novamente
 ```
+
+## Verification results
+
+Primeira execução real do playbook, em 2026-09-09, a partir de alvo recém-criado
+sem Docker Engine e sem `python3-requests`:
+
+```text
+PLAY RECAP (1ª execução)
+clean-room : ok=28  changed=12  unreachable=0  failed=0  skipped=0
+
+TASK [validate : Print project endpoint response]
+{"horario": "2026-09-09T05:30:57Z", "nome": "Projeto Korp"}
+
+PLAY RECAP (2ª execução)
+clean-room : ok=27  changed=0   unreachable=0  failed=0  skipped=1
+idempotence: second run reported changed=0
+```
+
+`validate` confirmou a resposta pelo NGINX na porta 80, a ausência de exposição
+direta na 8080 e a stack completa no alvo, com o container da aplicação em
+`8080/tcp` sem porta publicada.
+
+O `skipped=1` da segunda execução é a task de criação da rede Docker, pulada
+pela guarda `docker_network_info` — comportamento pretendido em KORP-050.
+
+Workflow `clean-room-image.yml` verde em pull request e em push para `develop`;
+`docker pull` da tag `develop` no GHCR funcionando.
+
+## Dois bloqueios encontrados na primeira execução
+
+Ambos tratados em KORP-057, porque são do harness e não da entrega:
+
+1. **Ansible exigido no host.** O script chamava `ansible` diretamente e o fluxo
+   morria com `ansible: comando não encontrado` em máquina sem Ansible. Agora as
+   invocações rodam em control node conteinerizado com versão fixada.
+2. **BuildKit e overlayfs aninhado.** O `docker build` do playbook falhava no
+   alvo com `failed to solve: mount source: "overlay" ... fstype: overlay`.
+   Resolvido com `storage-driver: vfs` no `daemon.json` do alvo.
+
+Nenhum dos dois é defeito do playbook: em VM real, com Ansible no controlador e
+driver padrão, o caminho não passa por nenhum deles.
 
 ## Recovery
 
