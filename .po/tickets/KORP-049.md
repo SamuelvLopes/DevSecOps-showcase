@@ -1,6 +1,6 @@
 # KORP-049 — Build e publicação da imagem no GHCR
 
-Status: in_review. Risco: médio. Depende de KORP-042 e KORP-048.
+Status: done. Risco: médio. Depende de KORP-042 e KORP-048.
 
 ## Objetivo
 
@@ -29,8 +29,8 @@ Garantir que a imagem da aplicação seja construída automaticamente no GitHub 
 - [x] Imagem recebe tag baseada no SHA do commit.
 - [x] Tags Git versionadas são refletidas no container registry.
 - [x] Helm aponta para a mesma imagem publicada.
-- [ ] Workflow validado verde após abertura da PR.
-- [ ] Package GHCR confirmado como acessível pelo cluster; se necessário, tornar o package público após o primeiro push.
+- [x] Workflow validado verde após abertura da PR.
+- [x] Package GHCR confirmado como público e acessível: `docker pull` anônimo da tag `develop` e da tag de release `v1.2.0` funciona sem autenticação.
 
 ## Verificação
 
