@@ -141,7 +141,7 @@ tickets:
   - KORP-037
   - KORP-039
 - id: KORP-041
-  title: Exemplos Terraform AWS/Azure para VM limpa
+  title: Terraform cloud VM AWS/Azure
   status: done
   depends_on:
   - KORP-040
