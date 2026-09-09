@@ -198,6 +198,6 @@ tickets:
   - KORP-012
 - id: KORP-051
   title: README orientado à experiência do avaliador
-  status: planned
+  status: in_review
   depends_on:
   - KORP-049

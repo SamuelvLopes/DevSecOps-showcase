@@ -1,6 +1,6 @@
 # KORP-051 — README orientado à experiência do avaliador
 
-Status: planned. Risco: baixo. Depende de KORP-049.
+Status: in_review. Risco: baixo. Depende de KORP-049.
 
 ## Objective
 
@@ -111,20 +111,22 @@ links para docs/
 
 ## Acceptance criteria
 
-- [ ] O topo do README permite identificar em menos de 60 segundos o objetivo, arquitetura e status da entrega.
-- [ ] Existe um diagrama Mermaid do caminho principal `cliente -> NGINX -> app -> Prometheus -> Grafana`.
-- [ ] Existe uma matriz resumida de requisitos oficiais com referência para implementação/evidência.
-- [ ] O README destaca explicitamente que o core oficial é Go + Docker + NGINX + Prometheus/Grafana + Ansible.
-- [ ] Kubernetes, GHCR, observabilidade LGTM/OTel e Terraform aparecem como diferenciais opcionais.
-- [ ] O README não implica que Terraform validado estaticamente equivale a infraestrutura cloud executada.
-- [ ] O status de release está consistente com as releases reais do GitHub.
-- [ ] O quick start principal continua curto e copiável.
-- [ ] O fluxo Ansible de um comando está visível e corretamente descrito.
-- [ ] Claims relevantes apontam para arquivo, teste, workflow, documentação ou comando de verificação.
-- [ ] Não há duplicações ou contradições relevantes entre seções.
-- [ ] Links internos são verificados.
-- [ ] O README continua legível sem exigir que o avaliador abra documentos secundários para entender o projeto.
+- [x] O topo do README permite identificar em menos de 60 segundos o objetivo, arquitetura e status da entrega.
+- [x] Existe um diagrama Mermaid do caminho principal `cliente -> NGINX -> app -> Prometheus -> Grafana`.
+- [x] Existe uma matriz resumida de requisitos oficiais com referência para implementação/evidência.
+- [x] O README destaca explicitamente que o core oficial é Go + Docker + NGINX + Prometheus/Grafana + Ansible.
+- [x] Kubernetes, GHCR, observabilidade LGTM/OTel e Terraform aparecem como diferenciais opcionais.
+- [x] O README não implica que Terraform validado estaticamente equivale a infraestrutura cloud executada.
+- [x] O status de release está consistente com as releases reais do GitHub.
+- [x] O quick start principal continua curto e copiável.
+- [x] O fluxo Ansible de um comando está visível e corretamente descrito.
+- [x] Claims relevantes apontam para arquivo, teste, workflow, documentação ou comando de verificação.
+- [x] Não há duplicações ou contradições relevantes entre seções.
+- [x] Links internos são verificados.
+- [x] O README continua legível sem exigir que o avaliador abra documentos secundários para entender o projeto.
 - [ ] Screenshots, se adicionadas, correspondem a execuções reais e são poucas/evidentes.
+      Não aplicável: nenhuma screenshot foi adicionada, para não versionar evidência que
+      envelhece junto com a UI do Grafana.
 
 ## Verification
 
@@ -147,6 +149,41 @@ Também comparar o conteúdo final com:
 - `docs/security-review.md`;
 - `docs/kubernetes-observability.md`;
 - releases e workflows atuais do GitHub.
+
+## Verification results
+
+Estrutura entregue, na ordem proposta: topo com badges reais e status,
+Arquitetura (Mermaid), Requisitos do desafio (matriz), Quick start com o
+provisionamento Ansible, Evidências, Engenharia além do desafio, Showcase
+opcional, Validação, Endpoints e Documentação.
+
+Os títulos ficaram em português, e não nos nomes ingleses do rascunho de
+estrutura, para não misturar idiomas com o corpo do texto e com o restante de
+`docs/`. A ordem e o conteúdo das seções seguem o proposto.
+
+Afirmações checadas contra o repositório em execução:
+
+- todos os links relativos resolvem;
+- os dois badges retornam `200 image/svg+xml`, e os workflows `CI` e `Security`
+  estão verdes no branch default;
+- os nomes de job citados existem em `ci.yml` e `security.yml`;
+- nós do diagrama Mermaid todos definidos e referenciados;
+- `curl http://localhost:80/projeto-korp` retorna `nome` e `horario` RFC3339 UTC;
+- `/health` responde 204 e `/metrics` expõe `projeto_korp_up` e
+  `projeto_korp_http_requests_total`;
+- Grafana responde sem credencial e serve o dashboard `projeto-korp` com dois
+  painéis;
+- container `http-server-projeto-korp` com `8080/tcp` e sem porta publicada;
+- timeouts de servidor e log JSON conferidos em `app/internal/app/server.go`;
+- nenhum `.tfstate` versionado, coerente com "Terraform nunca aplicado";
+- `docker pull` anônimo da imagem GHCR na tag `develop` funciona, o que
+  confirma o item que estava em aberto em KORP-049 sobre o package ser público.
+
+Fora do escopo deste ticket: ao validar `make demo` para citá-lo na seção de
+evidências, o comando falhou por uma race pré-existente de KORP-036. A correção
+foi separada em KORP-052 para não misturar mudança de script e de CI com
+alteração documental. Enquanto KORP-052 não estiver integrado, `make demo` é
+intermitente.
 
 ## Recovery
 
