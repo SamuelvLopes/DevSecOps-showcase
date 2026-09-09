@@ -1,3 +1,92 @@
+# Release v1.2.0
+
+## Escopo
+
+Publicação de imagem, aderência literal ao enunciado e experiência de avaliação,
+sobre a release v1.1.0:
+
+- build e publicação da imagem no GHCR pelo workflow `Container Image`, com tag
+  por branch, tag imutável `sha-<commit>` e `latest` em `main`;
+- container da aplicação nomeado `http-server-projeto-korp`, como no enunciado,
+  e nome de projeto Compose fixado em `projeto-korp`;
+- criação explícita da rede bridge no playbook Ansible, idempotente e com
+  validação de driver;
+- README reestruturado para a experiência do avaliador, com diagrama Mermaid,
+  matriz de requisitos e separação entre core oficial e showcase opcional;
+- correção de intermitência em `make demo` e cobertura do comando em CI pelo
+  job `Demo evidence`;
+- atualizações de dependências: `nginx:1.31-alpine`, `prom/prometheus:v3.14.0`,
+  `grafana/grafana-oss:13.0.2`, `actions/checkout@v7`, `actions/setup-go@v7` e
+  `hashicorp/setup-terraform@v4`.
+
+Esta release também traz `main` para o estado da entrega: a tag `v1.1.0` havia
+sido publicada a partir de `develop` e `main` permaneceu atrás, o que deixava os
+badges do README refletindo um estado anterior ao entregue.
+
+Docker Compose e Ansible continuam sendo o caminho principal do desafio. GHCR,
+Kubernetes e Terraform seguem como extensões: Helm e Terraform são validados
+estaticamente em CI, sem cluster ou conta cloud em execução.
+
+## Validação
+
+Validações locais executadas durante a entrega:
+
+- `make compose-smoke`;
+- `make compose-load`;
+- `make compose-recovery`;
+- `make demo`, em três execuções consecutivas;
+- `docker compose config` com nome de projeto resolvido como `projeto-korp`;
+- converge do Compose sobre rede pré-criada com os labels de identidade;
+- `sh -n scripts/demo-evidence.sh`;
+- `docker pull` anônimo da imagem publicada no GHCR;
+- verificação dos links relativos e dos badges do README.
+
+Validações remotas executadas em pull requests:
+
+- `Go quality`;
+- `Docker and Compose`;
+- `Compose smoke`;
+- `Compose load observability`;
+- `Compose recovery demo`;
+- `Demo evidence`;
+- `Helm chart`;
+- `Terraform examples`;
+- `Go vulnerability scan`;
+- `Image vulnerability scan`;
+- `GitGuardian Security Checks`.
+
+## Uso rápido
+
+```bash
+make compose-up
+curl http://localhost:80/projeto-korp
+make compose-down
+```
+
+Imagem publicada:
+
+```bash
+docker pull ghcr.io/samuelvlopes/devsecops-showcase/http-server-projeto-korp:v1.2.0
+```
+
+Instalação em cluster:
+
+```bash
+helm upgrade --install projeto-korp charts/projeto-korp \
+  --namespace projeto-korp \
+  --create-namespace \
+  --set image.tag=v1.2.0
+```
+
+## Pendências conhecidas
+
+- `container-image.yml` ainda usa `actions/checkout@v4`, enquanto os demais
+  workflows estão em `@v7`. Sem impacto funcional; fica para o Dependabot.
+- O playbook Ansible não foi executado em VM limpa nesta release; a validação
+  de KORP-050 cobriu as tasks por lint e pela simulação do caminho de rede.
+
+---
+
 # Release v1.1.0
 
 ## Escopo

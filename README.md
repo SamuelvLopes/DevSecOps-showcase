@@ -8,7 +8,7 @@ provisionado por arquivo e todo o ambiente provisionado por um único comando
 Ansible.
 
 O **core do desafio** é Go + Docker + NGINX + Prometheus/Grafana + Ansible.
-Release atual: **v1.1.0**. Terraform e Kubernetes são extensões opcionais e
+Release atual: **v1.2.0**. Terraform e Kubernetes são extensões opcionais e
 estão validados estaticamente — não há infraestrutura cloud em execução.
 
 ## Arquitetura

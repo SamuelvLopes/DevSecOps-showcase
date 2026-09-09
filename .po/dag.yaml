@@ -206,3 +206,11 @@ tickets:
   status: in_review
   depends_on:
   - KORP-036
+- id: KORP-053
+  title: Release v1.2.0 e sincronização de main
+  status: in_review
+  depends_on:
+  - KORP-049
+  - KORP-050
+  - KORP-051
+  - KORP-052
