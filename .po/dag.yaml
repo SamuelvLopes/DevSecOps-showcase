@@ -291,6 +291,6 @@ tickets:
 
 - id: KORP-066
   title: Comando do enunciado destacado no README
-  status: in_review
+  status: done
   depends_on:
   - KORP-065

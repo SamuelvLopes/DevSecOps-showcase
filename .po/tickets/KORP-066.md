@@ -1,6 +1,6 @@
 # KORP-066 — Comando do enunciado destacado no README
 
-Status: in_review. Risco: baixo. Depende de KORP-065.
+Status: done. Risco: baixo. Depende de KORP-065.
 
 ## Objetivo
 
@@ -30,8 +30,8 @@ A imagem do dashboard no README usa URL absoluta com `?raw=1`, para que a evidê
 - [x] README destaca o `curl http://localhost:80/projeto-korp` pedido no enunciado.
 - [x] Script informa quando Docker não está instalado ou não está acessível.
 - [x] Evidência visual do dashboard renderiza por URL absoluta no README.
-- [ ] PR integrada em `develop`.
-- [ ] Promovido para `main`.
+- [x] PR integrada em `develop`.
+- [x] Promovido para `main`.
 
 ## Segurança e recuperação
 
