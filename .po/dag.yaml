@@ -270,3 +270,9 @@ tickets:
   status: in_review
   depends_on:
   - KORP-061
+
+- id: KORP-063
+  title: Ciclo DevOps e referências ISO/IEC no README
+  status: in_review
+  depends_on:
+  - KORP-062
