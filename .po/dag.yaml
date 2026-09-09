@@ -214,3 +214,8 @@ tickets:
   - KORP-050
   - KORP-051
   - KORP-052
+- id: KORP-054
+  title: Dependência de requests no host alvo do playbook
+  status: in_review
+  depends_on:
+  - KORP-050

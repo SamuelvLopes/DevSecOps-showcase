@@ -26,6 +26,7 @@ korp_packages:
   - curl
   - gnupg
   - lsb-release
+  - python3-requests
 korp_docker_packages:
   - docker-ce
   - docker-ce-cli
