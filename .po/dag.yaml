@@ -246,10 +246,21 @@ tickets:
 
 - id: KORP-059
   title: Release v1.2.1 evidências finais
-  status: in_review
+  status: done
   depends_on:
   - KORP-054
   - KORP-055
   - KORP-056
   - KORP-057
   - KORP-058
+- id: KORP-060
+  title: Chart do NGINX não subia em cluster real
+  status: done
+  depends_on:
+  - KORP-042
+
+- id: KORP-061
+  title: Release v1.2.2 chart Kubernetes validado
+  status: in_review
+  depends_on:
+  - KORP-060

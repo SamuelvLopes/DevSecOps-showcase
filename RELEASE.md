@@ -1,3 +1,39 @@
+# Release v1.2.2
+
+## Escopo
+
+Release patch para o chart Kubernetes:
+
+- NGINX do chart usa imagem unprivileged e porta alta no container;
+- `securityContext` com `runAsUser: 101` mantém execução sem capabilities extras;
+- documentação registra que o chart foi exercitado em cluster real;
+- core Compose/Ansible permanece inalterado.
+
+## Validação
+
+Validações remotas executadas na PR do fix:
+
+- `Go quality`;
+- `Docker and Compose`;
+- `Compose smoke`;
+- `Compose load observability`;
+- `Compose recovery demo`;
+- `Demo evidence`;
+- `Helm chart`;
+- `Terraform examples`;
+- `Go vulnerability scan`;
+- `Image vulnerability scan`;
+- `GitGuardian Security Checks`.
+
+Validação operacional registrada em KORP-060:
+
+- chart aplicado em microk8s;
+- deployments da aplicação e do NGINX em `1/1 Running`;
+- `GET /projeto-korp` respondendo pelo NGINX do cluster;
+- `/metrics` expondo disponibilidade, contador e histograma.
+
+---
+
 # Release v1.2.1
 
 ## Escopo

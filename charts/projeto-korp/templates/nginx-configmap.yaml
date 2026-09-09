@@ -8,7 +8,7 @@ metadata:
 data:
   http-server-projeto-korp.conf: |
     server {
-        listen 80;
+        listen {{ .Values.nginx.containerPort }};
         server_name _;
 
         location / {
