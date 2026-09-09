@@ -1,3 +1,75 @@
+# Release v1.1.0
+
+## Escopo
+
+Extensão Kubernetes e observabilidade sobre a release v1.0.1:
+
+- chart Helm da aplicação e NGINX;
+- `ServiceMonitor` para coleta de `/metrics`;
+- valores Helm para kube-prometheus-stack, Loki, Tempo, Alloy e Beyla opcional;
+- bootstrap OpenTelemetry opt-in na aplicação Go;
+- workflow `Kubernetes` com `helm lint` e `helm template`;
+- Dependabot direcionado para `develop`, preservando GitFlow.
+
+Docker Compose e Ansible continuam sendo o caminho principal do desafio. A trilha
+Kubernetes é uma extensão operacional validada por renderização Helm e preparada
+para cluster real.
+
+## Validação
+
+Validações locais executadas durante a entrega:
+
+- `go test -race -cover ./...`;
+- `govulncheck ./...`;
+- `make docker-build`;
+- `make compose-config`;
+- `make helm-lint`;
+- `make helm-template`;
+- `helm template` com OpenTelemetry habilitado;
+- `terraform fmt -check -recursive terraform`;
+- `git diff --check`.
+
+Validações remotas executadas em pull requests:
+
+- `Helm chart`;
+- `Terraform examples`;
+- `Go quality`;
+- `Docker and Compose`;
+- `Compose smoke`;
+- `Compose load observability`;
+- `Compose recovery demo`;
+- `Go vulnerability scan`;
+- `Image vulnerability scan`;
+- `GitGuardian Security Checks`;
+- validação de configuração Dependabot.
+
+## Uso rápido
+
+```bash
+make helm-lint
+make helm-template
+```
+
+Instalação em cluster:
+
+```bash
+helm upgrade --install projeto-korp charts/projeto-korp \
+  --namespace projeto-korp \
+  --create-namespace \
+  --set image.tag=v1.1.0
+```
+
+Tracing é desabilitado por padrão e pode ser habilitado com:
+
+```bash
+helm upgrade --install projeto-korp charts/projeto-korp \
+  --namespace projeto-korp \
+  --set app.otel.enabled=true \
+  --set app.otel.endpoint=http://observability-alloy.monitoring.svc.cluster.local:4318
+```
+
+---
+
 # Release v1.0.1
 
 ## Escopo
