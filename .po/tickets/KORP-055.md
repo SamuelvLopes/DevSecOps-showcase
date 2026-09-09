@@ -1,6 +1,6 @@
 # Ticket: KORP-055 — Clean-room Ansible com Ubuntu em Docker/DinD
 
-Status: planned. Risco: alto. Depende de KORP-013 e KORP-050.
+Status: in_review. Risco: alto. Depende de KORP-013 e KORP-050.
 
 ## Objective
 
@@ -13,6 +13,22 @@ O ambiente deve ser tratado explicitamente como **clean-room containerizado / Do
 O desafio exige que o Ansible prepare um ambiente Linux com Docker, rede bridge, build da aplicação, Docker Compose, NGINX, Prometheus, Grafana e validação HTTP. A validação em host limpo é importante porque bugs de bootstrap só aparecem quando o alvo não possui dependências pré-instaladas.
 
 Uma VM Ubuntu continua sendo a evidência humana mais fiel de um host real, mas um alvo Docker privilegiado permite repetir a validação rapidamente, destruir o ambiente e recriá-lo do zero de forma automatizada.
+
+## Implementação atual
+
+- `tests/clean-room/Dockerfile`: Ubuntu 24.04 com systemd, SSH, Python 3 e sudo, sem Docker pré-instalado.
+- `tests/clean-room/README.md`: escopo, riscos, reprodução e distinção entre DinD e VM real.
+- `ansible/inventories/clean-room.ini`: inventory dedicado ao alvo descartável.
+- `scripts/ansible-clean-room.sh`: lifecycle do alvo, chave SSH efêmera, ping, provisionamento, validação, segunda execução e teardown.
+- `Makefile`: targets `ansible-clean-room-*` para operação reproduzível.
+- `.github/workflows/clean-room-image.yml`: build em PR e publicação da imagem no GHCR em `develop`/`main`.
+- `.tmp/` ignorado pelo Git para impedir versionamento de chaves/estado efêmero.
+
+Imagem GHCR planejada/publicada pelo workflow após merge:
+
+`ghcr.io/samuelvlopes/devsecops-showcase/ansible-clean-room-ubuntu`
+
+A implementação foi versionada, mas a execução DinD completa ainda precisa ser validada em um host Docker compatível antes de marcar o ticket como `done`.
 
 ## Scope
 
@@ -78,8 +94,8 @@ Alvo de referência: Ubuntu 24.04 LTS em arquitetura amd64. Suporte a outras dis
 
 ## Acceptance criteria
 
-- [ ] Existe uma imagem Ubuntu 24.04 de clean-room versionada no repositório.
-- [ ] A imagem não contém Docker Engine ou Docker Compose pré-instalados.
+- [x] Existe uma imagem Ubuntu 24.04 de clean-room versionada no repositório.
+- [x] A imagem não contém Docker Engine ou Docker Compose pré-instalados.
 - [ ] O alvo sobe de forma descartável com SSH, Python e sudo funcionais.
 - [ ] `ansible -m ping` alcança o alvo.
 - [ ] Uma única invocação de `ansible-playbook` provisiona Docker, rede, aplicação e observabilidade.
@@ -89,36 +105,46 @@ Alvo de referência: Ubuntu 24.04 LTS em arquitetura amd64. Suporte a outras dis
 - [ ] Prometheus reporta a aplicação como disponível.
 - [ ] Grafana responde saudável e mantém provisioning esperado.
 - [ ] Uma segunda execução do playbook demonstra idempotência real e não apenas `changed_when: false` artificial.
-- [ ] O ambiente pode ser destruído e recriado do zero com um comando documentado.
-- [ ] README/docs deixam explícito que DinD é clean-room automatizado e que VM continua sendo validação mais fiel de host real.
+- [x] O ambiente pode ser criado/removido por comandos versionados no Makefile/script.
+- [x] README/docs deixam explícito que DinD é clean-room automatizado e que VM continua sendo validação mais fiel de host real.
+- [ ] Workflow de build da imagem validado verde na PR.
+- [ ] Imagem GHCR confirmada acessível após merge em `develop`/`main`.
 
 ## Verification
 
-Fluxo esperado, com nomes finais definidos durante a implementação:
-
 ```bash
 make ansible-clean-room-up
-make ansible-clean-room-test
+make ansible-clean-room-ping
+make ansible-clean-room-provision
+make ansible-clean-room-validate
+make ansible-clean-room-idempotence
 make ansible-clean-room-down
 ```
 
-A rotina de teste deve executar conceitualmente:
+Fluxo completo:
+
+```bash
+make ansible-clean-room-test
+```
+
+A rotina de teste executa conceitualmente:
 
 ```text
 build clean-room Ubuntu
 → start target
+→ inject ephemeral SSH public key
 → wait SSH
 → ansible ping
+→ ansible-galaxy collection install
 → ansible-playbook (primeira execução)
-→ endpoint/Prometheus/Grafana/network checks
+→ endpoint/network/runtime checks
 → ansible-playbook (segunda execução)
-→ idempotence assertion
-→ teardown
+→ checks novamente
 ```
 
 ## Recovery
 
-Como o alvo é descartável, a recuperação padrão é destruir o container/volumes de teste e recriar o ambiente do zero. Nenhum dado de produção deve existir nesse ambiente.
+Como o alvo é descartável, a recuperação padrão é destruir o container/estado efêmero e recriar o ambiente do zero. Nenhum dado de produção deve existir nesse ambiente.
 
 ## Agent notes
 
