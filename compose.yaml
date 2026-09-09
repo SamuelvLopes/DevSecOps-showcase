@@ -27,7 +27,7 @@ services:
       - projeto-korp
 
   prometheus:
-    image: prom/prometheus:v2.55.1
+    image: prom/prometheus:v3.14.0
     restart: unless-stopped
     depends_on:
       - app
