@@ -44,7 +44,7 @@ services:
       - projeto-korp
 
   grafana:
-    image: grafana/grafana-oss:11.4.0
+    image: grafana/grafana-oss:13.0.2
     restart: unless-stopped
     depends_on:
       - prometheus
