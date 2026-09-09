@@ -56,6 +56,26 @@ para que nenhum painel possa ser publicado vazio.
 
 Pré-requisitos: Docker, Docker Compose e GNU Make.
 
+### Comandos de validação
+
+Para validar a entrega completa em um alvo Ubuntu limpo, use:
+
+```bash
+make ansible-clean-room-test
+```
+
+Esse comando precisa de Docker no host local. Se Docker não estiver instalado,
+ou se o daemon não estiver acessível pelo usuário atual, o script falha no início
+com uma mensagem objetiva antes de tentar criar o ambiente.
+
+O teste funcional solicitado no enunciado, depois da stack no ar, é exatamente:
+
+```bash
+curl http://localhost:80/projeto-korp
+```
+
+Para executar somente o fluxo local via Compose:
+
 ```bash
 make compose-up
 curl http://localhost:80/projeto-korp
@@ -73,7 +93,7 @@ Dashboard em <http://127.0.0.1:3000> — **acesso anônimo habilitado, sem login
 O dashboard "Projeto Korp" já vem provisionado. Para gerar movimento nos
 gráficos, `make compose-load`. Ao terminar, `make compose-down`.
 
-![Dashboard Projeto Korp no Grafana, com disponibilidade, taxa de requisições, taxa de erro, latência P95, volume por rota, disponibilidade ao longo do tempo, quantis de latência e requisições por classe de status](docs/images/grafana-projeto-korp.png)
+![Dashboard Projeto Korp no Grafana, com disponibilidade, taxa de requisições, taxa de erro, latência P95, volume por rota, disponibilidade ao longo do tempo, quantis de latência e requisições por classe de status](https://github.com/SamuelvLopes/DevSecOps-showcase/blob/main/docs/images/grafana-projeto-korp.png?raw=1)
 
 Captura real, sob carga, do dashboard provisionado por arquivo — não é mockup.
 Os `404` na série `unknown GET 404` e na linha `4xx` vêm de requisições a uma
