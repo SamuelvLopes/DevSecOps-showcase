@@ -184,3 +184,9 @@ tickets:
   - KORP-045
   - KORP-046
   - KORP-047
+- id: KORP-049
+  title: Build e publicação da imagem no GHCR
+  status: in_review
+  depends_on:
+  - KORP-042
+  - KORP-048

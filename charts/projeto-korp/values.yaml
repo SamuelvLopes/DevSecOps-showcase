@@ -1,7 +1,7 @@
 image:
   repository: ghcr.io/samuelvlopes/devsecops-showcase/http-server-projeto-korp
-  tag: v1.0.1
-  pullPolicy: IfNotPresent
+  tag: main
+  pullPolicy: Always
 
 app:
   replicas: 1
