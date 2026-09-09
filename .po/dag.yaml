@@ -190,3 +190,9 @@ tickets:
   depends_on:
   - KORP-042
   - KORP-048
+- id: KORP-050
+  title: Nomenclatura literal do container e criação explícita da rede
+  status: in_review
+  depends_on:
+  - KORP-006
+  - KORP-012

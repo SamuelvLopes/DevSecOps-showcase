@@ -12,7 +12,7 @@ verificações. Quando a evidência depender de VM limpa, isso fica indicado.
 | GET /projeto-korp: nome Projeto Korp e horario UTC por requisição | `app/`; KORP-002 | Testes de contrato, clock controlado e UTC |
 | Dockerfile para build e execução | `app/Dockerfile`; KORP-005 | `make docker-build`, CI e smoke Compose |
 | Instalar/configurar Docker no Linux | `ansible/`; KORP-011–013 | Playbook implementado; VM limpa em KORP-037 |
-| Rede bridge; aplicação sem porta publicada | `compose.yaml`; KORP-006 | `docker compose config` e inspeção no smoke |
+| Rede bridge; aplicação sem porta publicada | `compose.yaml`, `ansible/roles/stack`; KORP-006/050 | `docker compose config`, inspeção no smoke e task explícita de rede no playbook |
 | NGINX oficial; host 80 → container 80; volume /etc/nginx/conf.d/ | `compose.yaml`, `nginx/`; KORP-007 | Curl pela porta 80 e mount read-only |
 | Arquivo http-server-projeto-korp.conf com proxy para app:8080 | `nginx/http-server-projeto-korp.conf`; KORP-007 | Resposta pelo proxy e DNS interno |
 | Disponibilidade e volume em padrão Prometheus | `app/internal/metrics`, `prometheus/`; KORP-004/008 | Scrape UP e contador após requisições |

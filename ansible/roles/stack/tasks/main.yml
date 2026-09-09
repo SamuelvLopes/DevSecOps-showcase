@@ -47,6 +47,27 @@
     group: root
     mode: preserve
 
+- name: Check whether the Docker network already exists
+  community.docker.docker_network_info:
+    name: "{{ korp_network_name }}"
+  register: korp_network_info
+
+- name: Create Docker bridge network
+  community.docker.docker_network:
+    name: "{{ korp_network_name }}"
+    driver: bridge
+    labels: "{{ korp_network_labels }}"
+    state: present
+  when: not korp_network_info.exists
+
+- name: Validate Docker network driver
+  community.docker.docker_network_info:
+    name: "{{ korp_network_name }}"
+  register: korp_network_state
+  failed_when: >-
+    not korp_network_state.exists or
+    korp_network_state.network.Driver != "bridge"
+
 - name: Converge Compose stack
   ansible.builtin.command:
     cmd: docker compose -f "{{ korp_compose_file }}" up --build -d

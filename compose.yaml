@@ -1,8 +1,11 @@
+name: projeto-korp
+
 services:
   app:
     build:
       context: ./app
     image: http-server-projeto-korp:local
+    container_name: http-server-projeto-korp
     restart: unless-stopped
     read_only: true
     cap_drop:
