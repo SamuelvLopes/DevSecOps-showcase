@@ -1,52 +1,165 @@
-# Projeto Korp — DevSecOps Showcase
+# Projeto Korp — DevOps / DevSecOps Showcase
 
-Implementação incremental do desafio técnico Korp: Go, Docker Compose, NGINX,
-Prometheus, Grafana e provisionamento Ansible em Linux.
+[![CI](https://github.com/SamuelvLopes/DevSecOps-showcase/actions/workflows/ci.yml/badge.svg)](https://github.com/SamuelvLopes/DevSecOps-showcase/actions/workflows/ci.yml)
+[![Security](https://github.com/SamuelvLopes/DevSecOps-showcase/actions/workflows/security.yml/badge.svg)](https://github.com/SamuelvLopes/DevSecOps-showcase/actions/workflows/security.yml)
 
-Status: core Compose validado por CI e publicado na release v1.0.0. A trilha
-Terraform adiciona exemplos executáveis para provisionar VM Ubuntu em AWS ou
-Azure e usar o playbook Ansible em ambiente limpo quando as credenciais do
-provedor estiverem configuradas.
+Serviço HTTP em Go atrás de NGINX, com métricas Prometheus, dashboard Grafana
+provisionado por arquivo e todo o ambiente provisionado por um único comando
+Ansible.
 
-## Entrega
+O **core do desafio** é Go + Docker + NGINX + Prometheus/Grafana + Ansible.
+Release atual: **v1.2.0**. Terraform e Kubernetes são extensões opcionais e
+estão validados estaticamente — não há infraestrutura cloud em execução.
 
-`cliente → NGINX :80 → http-server-projeto-korp :8080`
+## Arquitetura
 
-O serviço responde a `GET /projeto-korp` com nome e horário UTC dinâmico.
-Prometheus coleta métricas da aplicação e Grafana carrega datasource/dashboard
-por arquivos. Ansible prepara hosts Linux da família Debian, copia a stack,
-executa Compose e valida HTTP, Prometheus e Grafana.
+```mermaid
+flowchart LR
+  cliente([cliente])
+  subgraph rede["rede bridge · projeto-korp"]
+    nginx["NGINX<br/>publica 80:80"]
+    app["http-server-projeto-korp<br/>Go · :8080 sem porta no host"]
+    prom["Prometheus<br/>127.0.0.1:9090"]
+    graf["Grafana<br/>127.0.0.1:3000"]
+  end
+  cliente -->|"GET /projeto-korp"| nginx
+  nginx -->|"proxy_pass app:8080"| app
+  prom -.->|"scrape /metrics"| app
+  graf -->|"datasource"| prom
+```
 
-## Navegação
+A aplicação **não publica porta no host**: só é alcançável pela rede interna,
+através do NGINX. Prometheus e Grafana ficam em loopback, fora da interface
+pública. Detalhes e limites em [`docs/architecture.md`](docs/architecture.md).
 
-- [Requisitos e critérios de aceite](docs/requirements.md)
-- [Release v1.0.0](RELEASE.md)
-- [Arquitetura e limites](docs/architecture.md)
-- [Threat model STRIDE](docs/threat-model.md)
-- [Security review](docs/security-review.md)
-- [Runbook](docs/runbook.md)
-- [Demo](docs/demo.md)
-- [Technical walkthrough](docs/technical-walkthrough.md)
-- [Kubernetes observability](docs/kubernetes-observability.md)
-- [Teste de carga e observabilidade](scripts/load-observability.sh)
-- [Demo de recuperação](scripts/recovery-demo.sh)
-- [Validação de checkout limpo](scripts/clean-checkout-validation.sh)
-- [Decisões técnicas](docs/decisions/ADR-001-compose-core.md)
-- [Governança GitHub](docs/github-governance.md)
-- [Tickets e dependências](.po/README.md)
-- [GitFlow e convenções](docs/gitflow.md)
+## Requisitos do desafio
 
-## Execução local
+| Requisito oficial | Implementação | Evidência |
+| --- | --- | --- |
+| **Parte 1** — serviço Go na 8080, `GET /projeto-korp` com horário UTC por requisição, Dockerfile, rede bridge, app sem porta publicada, NGINX 80→80 com volume em `/etc/nginx/conf.d/` | [`app/`](app), [`app/Dockerfile`](app/Dockerfile), [`compose.yaml`](compose.yaml), [`nginx/http-server-projeto-korp.conf`](nginx/http-server-projeto-korp.conf) | `make compose-smoke` |
+| **Parte 2** — disponibilidade e volume de requisições em padrão Prometheus, Prometheus e Grafana no Compose, dashboard do serviço | [`app/internal/metrics/`](app/internal/metrics), [`prometheus/prometheus.yml`](prometheus/prometheus.yml), [`grafana/`](grafana) | `make compose-load` |
+| **Parte 3** — playbook que instala Docker, cria a rede, builda a imagem, sobe o Compose, configura NGINX e monitoramento, valida por HTTP e imprime a resposta | [`ansible/`](ansible) | `ansible-playbook site.yml` |
+| **Bônus** — Grafana provisionado por arquivo em vez de configuração manual | [`grafana/provisioning/`](grafana/provisioning) | `make compose-smoke` valida datasource e dashboard por UID |
+
+Matriz completa de requisito → arquivo → critério de aceite em
+[`docs/requirements.md`](docs/requirements.md).
+
+## Quick start
+
+Pré-requisitos: Docker, Docker Compose e GNU Make.
 
 ```bash
 make compose-up
-curl http://localhost/projeto-korp
-curl -i http://localhost/health
-curl http://localhost:9090/api/v1/query?query=projeto_korp_up
-make compose-down
+curl http://localhost:80/projeto-korp
 ```
 
-Para desenvolvimento direto da aplicação:
+```json
+{"nome":"Projeto Korp","horario":"2026-09-09T03:40:51Z"}
+```
+
+O campo `horario` é resolvido a cada requisição, no instante da chamada, em UTC
+e formato RFC3339. Duas chamadas no mesmo segundo podem legitimamente retornar
+o mesmo texto.
+
+Dashboard em <http://127.0.0.1:3000> — **acesso anônimo habilitado, sem login**.
+O dashboard "Projeto Korp" já vem provisionado, com disponibilidade e volume de
+requisições. Para gerar movimento nos gráficos, `make compose-load`. Ao
+terminar, `make compose-down`.
+
+### Provisionamento completo por Ansible
+
+As partes 1 e 2 sobem inteiras com um comando, em host Linux da família Debian
+(alvo: Ubuntu 24.04 LTS):
+
+```bash
+cd ansible
+ansible-galaxy collection install -r requirements.yml
+ansible-playbook site.yml
+```
+
+O playbook instala Docker, cria a rede bridge, copia a stack, executa o Compose
+e ao final valida o endpoint HTTP, o target do Prometheus, o datasource e o
+dashboard do Grafana — imprimindo a resposta de `/projeto-korp` no console.
+Inventário e execução remota em [`ansible/README.md`](ansible/README.md).
+
+## Evidências
+
+Um comando imprime a evidência da entrega inteira:
+
+```bash
+make demo
+```
+
+Percorre contrato HTTP, portas publicadas, target do Prometheus, volume de
+requisições e provisionamento do Grafana. **Derruba a stack ao final** — para
+navegar no Grafana, use `make compose-up` e deixe a stack no ar.
+
+As mesmas verificações rodam em CI a cada pull request, em jobs separados:
+
+| Job | O que comprova |
+| --- | --- |
+| `Compose smoke` | contrato HTTP pelo proxy, target do Prometheus, datasource e dashboard por UID, e que a aplicação não publica porta |
+| `Compose load observability` | carga curta com [k6](scripts/load-k6.js) e o contador de requisições respondendo no Prometheus |
+| `Compose recovery demo` | falha injetada no serviço e recuperação, com a métrica voltando a `1` |
+| `Go quality` | testes com race detector, formatação e vet |
+| `Go vulnerability scan` / `Image vulnerability scan` | `govulncheck` e scan da imagem, bloqueantes |
+
+## Engenharia além do desafio
+
+- **Imagem mínima e sem privilégio**: build multi-stage para `scratch`, usuário
+  não-root, `read_only`, `cap_drop: ALL` e `no-new-privileges`
+  ([`app/Dockerfile`](app/Dockerfile), [`compose.yaml`](compose.yaml)).
+- **Operabilidade**: `/health`, encerramento gracioso em SIGINT/SIGTERM,
+  timeouts de servidor e logs estruturados em JSON.
+- **Segurança como gate**: `govulncheck` e scan de imagem bloqueiam a PR;
+  threat model STRIDE e security review versionados.
+- **Teste de carga e recuperação** automatizados, não só smoke.
+- **Rastreabilidade**: uma branch e uma PR por ticket, com critérios de aceite
+  registrados em [`.po/`](.po/README.md) e ADRs para as decisões estruturais.
+- **Validação em checkout limpo** (`make clean-checkout`), garantindo que a
+  entrega não depende de estado local.
+
+## Showcase opcional
+
+Fora do escopo do enunciado, presentes como demonstração de amplitude:
+
+- **Imagem publicada no GHCR** pelo workflow `Container Image`, com tag por
+  branch e tag imutável `sha-<commit>`. Disponível publicamente:
+  ```bash
+  docker pull ghcr.io/samuelvlopes/devsecops-showcase/http-server-projeto-korp:develop
+  ```
+- **Helm chart e Kubernetes** — chart da aplicação e do NGINX, `ServiceMonitor`
+  para o kube-prometheus-stack, valores para Loki, Tempo, Alloy e Beyla, e
+  bootstrap OpenTelemetry opt-in na aplicação. Validados por `helm lint` e
+  `helm template` em CI; **não há cluster em execução**.
+  Ver [`docs/kubernetes-observability.md`](docs/kubernetes-observability.md).
+- **Terraform para AWS e Azure** — exemplos que provisionam uma VM Ubuntu para
+  uso com o playbook. Validados por `fmt` e `validate` em CI; **nunca aplicados
+  em conta real**. Ver [`docs/terraform-cloud.md`](docs/terraform-cloud.md).
+
+## Validação
+
+Fluxo da entrega:
+
+```bash
+make compose-smoke      # HTTP, Prometheus, Grafana e portas publicadas
+make compose-load       # carga curta com k6 e métrica no Prometheus
+make compose-recovery   # falha injetada e recuperação do serviço
+make clean-checkout     # valida a entrega em diretório temporário limpo
+```
+
+Qualidade e artefatos:
+
+```bash
+make check              # formatação, vet, testes com race detector e whitespace
+make docker-build
+make ansible-syntax
+make helm-lint          # opcional
+make terraform-validate # opcional
+```
+
+`make help` lista todos os targets. Para desenvolvimento direto da aplicação
+(requer Go 1.27.1 ou superior):
 
 ```bash
 cd app
@@ -54,62 +167,36 @@ go run ./cmd/http-server-projeto-korp
 curl http://localhost:8080/projeto-korp
 ```
 
-O endereço padrão da aplicação é `:8080`; `HTTP_ADDRESS=:18080` permite usar
-outra porta em desenvolvimento sem alterar o requisito do container.
+O endereço padrão é `:8080`; `HTTP_ADDRESS=:18080` permite outra porta em
+desenvolvimento sem alterar o requisito do container.
 
-Resposta:
+## Endpoints
 
-```json
-{"nome":"Projeto Korp","horario":"2026-09-08T20:15:30Z"}
-```
+| Endpoint | Resposta |
+| --- | --- |
+| `GET /projeto-korp` | JSON com `nome` e `horario` UTC |
+| `GET /health` | HTTP 204, sem corpo |
+| `GET /metrics` | Exposição Prometheus com `projeto_korp_up` e `projeto_korp_http_requests_total` |
 
-O valor de `horario` corresponde ao instante da requisição em UTC.
+## Documentação
 
-`GET /health` retorna HTTP 204 e não possui corpo. O processo trata SIGINT e
-SIGTERM com encerramento gracioso.
+Avaliação:
 
-`GET /metrics` expõe métricas Prometheus para disponibilidade e volume de
-requisições HTTP.
+- [Requisitos e critérios de aceite](docs/requirements.md)
+- [Arquitetura e limites](docs/architecture.md)
+- [Roteiro de demo](docs/demo.md)
+- [Technical walkthrough](docs/technical-walkthrough.md)
 
-## Verificação
+Operação e segurança:
 
-```bash
-make test
-make help
-make check
-make docker-build
-make compose-up
-make compose-down
-make compose-smoke
-make compose-load
-make compose-recovery
-make clean-checkout
-make ansible-syntax
-make terraform-fmt
-make terraform-validate
-make helm-lint
-make helm-template
-```
+- [Runbook](docs/runbook.md)
+- [Threat model STRIDE](docs/threat-model.md)
+- [Security review](docs/security-review.md)
+- [Decisões técnicas (ADRs)](docs/decisions/ADR-001-compose-core.md)
 
-Requer Go 1.27.1 ou superior, Git, GNU Make, Docker e Docker Compose. Ansible é
-necessário apenas para o provisionamento remoto. Terraform é necessário apenas
-para os exemplos opcionais de AWS/Azure.
+Processo:
 
-O Compose cria a rede bridge `projeto-korp` e mantém a aplicação sem porta
-publicada no host. O NGINX publica `80:80` e encaminha para `app:8080`.
-Prometheus fica em `127.0.0.1:9090` para consulta local.
-Grafana fica em `127.0.0.1:3000` com dashboard provisionado.
-
-O diretório `ansible/` contém o playbook para instalar Docker, copiar a stack e
-executar Compose em VM Linux. O playbook valida o endpoint HTTP, Prometheus e
-Grafana ao final da execução.
-
-## Processo
-
-Uma branch e uma PR por ticket, commits rastreáveis e verificações registradas.
-Cada ticket registra critérios de aceite e resultados de verificação.
-Pull requests para `develop` e `main` executam CI com testes Go, build Docker e
-validação Compose. Gates de segurança executam `govulncheck` e scan de imagem.
-O smoke Compose valida HTTP, Prometheus e Grafana no fluxo completo. Carga curta
-com k6 e demo de recuperação também rodam em CI.
-Kubernetes e cloud são extensões opcionais e não condicionam a entrega Compose/Ansible. Terraform para AWS e Azure em [`docs/terraform-cloud.md`](docs/terraform-cloud.md) provisiona uma VM Ubuntu para uso com Ansible. A trilha Kubernetes em [`docs/kubernetes-observability.md`](docs/kubernetes-observability.md) adiciona Helm, ServiceMonitor, Loki, Tempo, Alloy e OpenTelemetry.
+- [Releases](RELEASE.md)
+- [GitFlow e convenções](docs/gitflow.md)
+- [Governança GitHub](docs/github-governance.md)
+- [Tickets e dependências](.po/README.md)

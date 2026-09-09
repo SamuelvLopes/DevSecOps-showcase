@@ -1,8 +1,11 @@
+name: projeto-korp
+
 services:
   app:
     build:
       context: ./app
     image: http-server-projeto-korp:local
+    container_name: http-server-projeto-korp
     restart: unless-stopped
     read_only: true
     cap_drop:
@@ -15,7 +18,7 @@ services:
       - projeto-korp
 
   nginx:
-    image: nginx:1.27-alpine
+    image: nginx:1.31-alpine
     restart: unless-stopped
     depends_on:
       - app
@@ -27,7 +30,7 @@ services:
       - projeto-korp
 
   prometheus:
-    image: prom/prometheus:v2.55.1
+    image: prom/prometheus:v3.14.0
     restart: unless-stopped
     depends_on:
       - app
@@ -44,7 +47,7 @@ services:
       - projeto-korp
 
   grafana:
-    image: grafana/grafana-oss:11.4.0
+    image: grafana/grafana-oss:13.0.2
     restart: unless-stopped
     depends_on:
       - prometheus

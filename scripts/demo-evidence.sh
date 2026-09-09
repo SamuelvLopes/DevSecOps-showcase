@@ -23,6 +23,58 @@ wait_url() {
   curl -fsS "$url" >/dev/null
 }
 
+prometheus_query() {
+  curl -fsS "http://127.0.0.1:9090/api/v1/query?query=$1" > "$2"
+}
+
+wait_target_up() {
+  retries="$1"
+  delay="$2"
+  i=1
+  while [ "$i" -le "$retries" ]; do
+    if prometheus_query "up%7Bjob%3D%22http-server-projeto-korp%22%7D" "$tmp_dir/prometheus-up.json" 2>/dev/null \
+      && python3 - "$tmp_dir/prometheus-up.json" <<'PY'
+import json
+import sys
+
+with open(sys.argv[1], encoding="utf-8") as fh:
+    result = json.load(fh)["data"]["result"]
+
+raise SystemExit(0 if result and result[0]["value"][1] == "1" else 1)
+PY
+    then
+      return 0
+    fi
+    sleep "$delay"
+    i=$((i + 1))
+  done
+  return 1
+}
+
+wait_request_counter() {
+  retries="$1"
+  delay="$2"
+  i=1
+  while [ "$i" -le "$retries" ]; do
+    if prometheus_query "sum(projeto_korp_http_requests_total)" "$tmp_dir/prometheus-requests.json" 2>/dev/null \
+      && python3 - "$tmp_dir/prometheus-requests.json" <<'PY'
+import json
+import sys
+
+with open(sys.argv[1], encoding="utf-8") as fh:
+    result = json.load(fh)["data"]["result"]
+
+raise SystemExit(0 if result else 1)
+PY
+    then
+      return 0
+    fi
+    sleep "$delay"
+    i=$((i + 1))
+  done
+  return 1
+}
+
 section() {
   printf '\n## %s\n' "$1"
 }
@@ -61,8 +113,7 @@ section "Published ports"
 docker compose ps
 
 section "Prometheus target"
-sleep 16
-curl -fsS "http://127.0.0.1:9090/api/v1/query?query=up%7Bjob%3D%22http-server-projeto-korp%22%7D" > "$tmp_dir/prometheus-up.json"
+wait_target_up 24 5
 python3 - "$tmp_dir/prometheus-up.json" <<'PY'
 import json
 import sys
@@ -82,7 +133,7 @@ print("up{job=\"http-server-projeto-korp\"} =", value)
 PY
 
 section "Request volume"
-curl -fsS "http://127.0.0.1:9090/api/v1/query?query=sum(projeto_korp_http_requests_total)" > "$tmp_dir/prometheus-requests.json"
+wait_request_counter 24 5
 python3 - "$tmp_dir/prometheus-requests.json" <<'PY'
 import json
 import sys

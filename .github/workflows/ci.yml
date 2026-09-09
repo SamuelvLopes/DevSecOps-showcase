@@ -19,10 +19,10 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v7
         with:
           go-version-file: app/go.mod
 
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Build application image
         run: make docker-build
@@ -50,7 +50,7 @@ jobs:
       - docker-compose
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Run Compose smoke
         run: make compose-smoke
@@ -62,10 +62,22 @@ jobs:
       - compose-smoke
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Run load observability
         run: make compose-load
+
+  demo-evidence:
+    name: Demo evidence
+    runs-on: ubuntu-24.04
+    needs:
+      - compose-smoke
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Run demo evidence
+        run: make demo
 
   compose-recovery:
     name: Compose recovery demo
@@ -74,7 +86,7 @@ jobs:
       - compose-smoke
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Run recovery demo
         run: make compose-recovery

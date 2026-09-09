@@ -184,3 +184,33 @@ tickets:
   - KORP-045
   - KORP-046
   - KORP-047
+- id: KORP-049
+  title: Build e publicação da imagem no GHCR
+  status: in_review
+  depends_on:
+  - KORP-042
+  - KORP-048
+- id: KORP-050
+  title: Nomenclatura literal do container e criação explícita da rede
+  status: done
+  depends_on:
+  - KORP-006
+  - KORP-012
+- id: KORP-051
+  title: README orientado à experiência do avaliador
+  status: in_review
+  depends_on:
+  - KORP-049
+- id: KORP-052
+  title: Flakiness em demo-evidence e cobertura de CI
+  status: in_review
+  depends_on:
+  - KORP-036
+- id: KORP-053
+  title: Release v1.2.0 e sincronização de main
+  status: in_review
+  depends_on:
+  - KORP-049
+  - KORP-050
+  - KORP-051
+  - KORP-052
