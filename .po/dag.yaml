@@ -279,6 +279,12 @@ tickets:
 
 - id: KORP-064
   title: Release v1.2.4 ciclo DevOps e ISO/IEC
-  status: in_review
+  status: done
   depends_on:
   - KORP-063
+
+- id: KORP-065
+  title: README aponta para GitHub Releases
+  status: done
+  depends_on:
+  - KORP-064
