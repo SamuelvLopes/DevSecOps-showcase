@@ -10,6 +10,7 @@
 .terraform/
 ansible/inventory/hosts.yml
 ansible/secrets.yml
+.tmp/
 
 # Build and local tooling
 bin/
