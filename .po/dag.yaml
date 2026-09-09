@@ -253,3 +253,8 @@ tickets:
   - KORP-056
   - KORP-057
   - KORP-058
+- id: KORP-060
+  title: Chart do NGINX não subia em cluster real
+  status: in_review
+  depends_on:
+  - KORP-042
