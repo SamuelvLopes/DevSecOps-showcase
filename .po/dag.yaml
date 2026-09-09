@@ -192,7 +192,12 @@ tickets:
   - KORP-048
 - id: KORP-050
   title: Nomenclatura literal do container e criação explícita da rede
-  status: in_review
+  status: done
   depends_on:
   - KORP-006
   - KORP-012
+- id: KORP-051
+  title: README orientado à experiência do avaliador
+  status: planned
+  depends_on:
+  - KORP-049
