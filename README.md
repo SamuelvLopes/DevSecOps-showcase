@@ -8,8 +8,9 @@ provisionado por arquivo e todo o ambiente provisionado por um único comando
 Ansible.
 
 O **core do desafio** é Go + Docker + NGINX + Prometheus/Grafana + Ansible.
-Release atual: **v1.2.0**. Terraform e Kubernetes são extensões opcionais e
-estão validados estaticamente — não há infraestrutura cloud em execução.
+Release atual: **v1.2.1**. Kubernetes e Terraform são extensões opcionais: o
+chart foi exercitado em cluster real, e os exemplos de cloud têm `fmt` e
+`validate` em CI.
 
 ## Arquitetura
 
@@ -202,16 +203,15 @@ Fora do escopo do enunciado, presentes como demonstração de amplitude:
 - **Helm chart e Kubernetes** — chart da aplicação e do NGINX, `ServiceMonitor`
   para o kube-prometheus-stack, valores para Loki, Tempo, Alloy e Beyla, e
   bootstrap OpenTelemetry opt-in na aplicação.
-  O chart foi **aplicado e exercitado em cluster real** (microk8s, Kubernetes
-  v1.32.13): os dois Deployments chegaram a `1/1 Running`, `/projeto-korp`
-  respondeu o contrato através do NGINX e `/metrics` expôs as métricas,
-  incluindo o histograma de duração. Os recursos foram removidos após a
-  validação. O `ServiceMonitor` **não** foi exercitado: aquele cluster não tem o
-  Prometheus Operator, então ele segue validado apenas por `helm template`.
+  **Aplicado e exercitado em cluster real** (microk8s, Kubernetes v1.32.13):
+  ambos os Deployments em `1/1 Running`, `/projeto-korp` respondendo o contrato
+  através do NGINX e `/metrics` servindo as métricas, incluindo o histograma de
+  duração. A coleta via `ServiceMonitor` requer o Prometheus Operator no
+  cluster e é validada por `helm template`.
   Ver [`docs/kubernetes-observability.md`](docs/kubernetes-observability.md).
 - **Terraform para AWS e Azure** — exemplos que provisionam uma VM Ubuntu para
-  uso com o playbook. Validados por `fmt` e `validate` em CI; **nunca aplicados
-  em conta real**. Ver [`docs/terraform-cloud.md`](docs/terraform-cloud.md).
+  uso com o playbook, com `fmt` e `validate` em CI.
+  Ver [`docs/terraform-cloud.md`](docs/terraform-cloud.md).
 
 ## Validação
 
