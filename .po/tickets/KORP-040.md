@@ -1,6 +1,6 @@
 # KORP-040 — Release final e envio
 
-Status: in_review. Risco: médio. Depende de KORP-037 e KORP-039.
+Status: done. Risco: médio. Depende de KORP-037 e KORP-039.
 
 ## Objetivo
 
@@ -35,4 +35,4 @@ em `develop`.
 - Demo no diretório temporário validou contrato HTTP, portas, Prometheus e
   Grafana.
 - Após validação, `docker compose ps` não retornou containers ativos.
-- GitHub Actions: pendente após abertura da PR de release.
+- GitHub Actions da release v1.0.0 passaram antes do merge.
