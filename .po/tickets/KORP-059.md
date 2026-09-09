@@ -1,6 +1,6 @@
 # KORP-059 — Release v1.2.1 evidências finais
 
-Status: in_review. Risco: baixo. Depende de KORP-054, KORP-055, KORP-056, KORP-057 e KORP-058.
+Status: done. Risco: baixo. Depende de KORP-054, KORP-055, KORP-056, KORP-057 e KORP-058.
 
 ## Objetivo
 
@@ -16,9 +16,9 @@ Promover para `main` os ajustes finais de evidência e fechamento da entrega par
 
 - [x] PR de evidências integrada em `develop`.
 - [x] Tickets KORP-054, KORP-055, KORP-056, KORP-057 e KORP-058 fechados.
-- [ ] PR de release aberta para `main`.
-- [ ] GitHub Actions verdes na PR de release.
-- [ ] Tag `v1.2.1` publicada.
+- [x] PR de release aberta para `main`.
+- [x] GitHub Actions verdes na PR de release.
+- [x] Tag `v1.2.1` publicada.
 
 ## Evidências
 
