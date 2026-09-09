@@ -236,3 +236,10 @@ tickets:
   status: in_review
   depends_on:
   - KORP-055
+- id: KORP-058
+  title: Evidência mostrada no README
+  status: in_review
+  depends_on:
+  - KORP-051
+  - KORP-055
+  - KORP-057
