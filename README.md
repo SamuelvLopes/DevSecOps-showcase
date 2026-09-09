@@ -69,9 +69,14 @@ e formato RFC3339. Duas chamadas no mesmo segundo podem legitimamente retornar
 o mesmo texto.
 
 Dashboard em <http://127.0.0.1:3000> — **acesso anônimo habilitado, sem login**.
-O dashboard "Projeto Korp" já vem provisionado, com disponibilidade e volume de
-requisições. Para gerar movimento nos gráficos, `make compose-load`. Ao
-terminar, `make compose-down`.
+O dashboard "Projeto Korp" já vem provisionado. Para gerar movimento nos
+gráficos, `make compose-load`. Ao terminar, `make compose-down`.
+
+![Dashboard Projeto Korp no Grafana, com disponibilidade, taxa de requisições, taxa de erro, latência P95, volume por rota, disponibilidade ao longo do tempo, quantis de latência e requisições por classe de status](docs/images/grafana-projeto-korp.png)
+
+Captura real, sob carga, do dashboard provisionado por arquivo — não é mockup.
+Os `404` na série `unknown GET 404` e na linha `4xx` vêm de requisições a uma
+rota inexistente durante a coleta.
 
 ### Provisionamento completo por Ansible
 
@@ -91,15 +96,69 @@ Inventário e execução remota em [`ansible/README.md`](ansible/README.md).
 
 ## Evidências
 
-Um comando imprime a evidência da entrega inteira:
+Um comando imprime a evidência da entrega inteira. Saída real, não editada além
+do corte de linhas de build:
 
-```bash
-make demo
+```console
+$ make demo
+
+## HTTP contract
+{"horario": "2026-09-09T12:30:40Z", "nome": "Projeto Korp"}
+
+## Published ports
+NAME                        IMAGE                            SERVICE      PORTS
+http-server-projeto-korp    http-server-projeto-korp:local   app          8080/tcp
+projeto-korp-grafana-1      grafana/grafana-oss:13.0.2       grafana      127.0.0.1:3000->3000/tcp
+projeto-korp-nginx-1        nginx:1.31-alpine                nginx        0.0.0.0:80->80/tcp
+projeto-korp-prometheus-1   prom/prometheus:v3.14.0          prometheus   127.0.0.1:9090->9090/tcp
+
+## Prometheus target
+up{job="http-server-projeto-korp"} = 1
+
+## Request volume
+sum(projeto_korp_http_requests_total) = 5489
+
+## Grafana provisioning
+datasource = prometheus
+dashboard = projeto-korp
+
+## Done
+demo evidence passed
 ```
 
-Percorre contrato HTTP, portas publicadas, target do Prometheus, volume de
-requisições e provisionamento do Grafana. **Derruba a stack ao final** — para
-navegar no Grafana, use `make compose-up` e deixe a stack no ar.
+Repare em `app 8080/tcp`: sem porta publicada no host, como o enunciado exige.
+`make demo` **derruba a stack ao final** — para navegar no Grafana, use
+`make compose-up` e deixe a stack no ar.
+
+### Provisionamento validado em alvo limpo
+
+O playbook é executado contra um Ubuntu 24.04 descartável que sobe **sem Docker
+Engine**, para que a instalação seja de verdade e não idempotência aparente:
+
+```console
+$ make ansible-clean-room-test
+
+PLAY RECAP  (1ª execução)
+clean-room : ok=28  changed=12  unreachable=0  failed=0  skipped=0
+
+TASK [validate : Print project endpoint response]
+{"horario": "2026-09-09T05:35:56Z", "nome": "Projeto Korp"}
+
+PLAY RECAP  (2ª execução)
+clean-room : ok=27  changed=0   unreachable=0  failed=0  skipped=1
+idempotence: second run reported changed=0
+```
+
+A segunda execução com `changed=0` é verificada pelo script, que lê o
+`PLAY RECAP` e falha se houver mudança — rodar duas vezes sem checar prova que o
+playbook não quebra, não que seja idempotente. O `skipped=1` é a criação da rede
+Docker sendo pulada por já existir.
+
+Escopo e limites em [`tests/clean-room/README.md`](tests/clean-room/README.md):
+é Docker-in-Docker, clean-room automatizado e reproduzível, **não** equivalente
+a uma VM real.
+
+### Verificações em CI
 
 As mesmas verificações rodam em CI a cada pull request, em jobs separados:
 
@@ -108,6 +167,7 @@ As mesmas verificações rodam em CI a cada pull request, em jobs separados:
 | `Compose smoke` | contrato HTTP pelo proxy, target do Prometheus, datasource e dashboard por UID, e que a aplicação não publica porta |
 | `Compose load observability` | carga curta com [k6](scripts/load-k6.js) e o contador de requisições respondendo no Prometheus |
 | `Compose recovery demo` | falha injetada no serviço e recuperação, com a métrica voltando a `1` |
+| `Demo evidence` | o mesmo `make demo` acima, para que a evidência não apodreça |
 | `Go quality` | testes com race detector, formatação e vet |
 | `Go vulnerability scan` / `Image vulnerability scan` | `govulncheck` e scan da imagem, bloqueantes |
 

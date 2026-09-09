@@ -222,7 +222,7 @@
             ]
           },
           "unit": "s",
-          "decimals": 4
+          "decimals": 2
         },
         "overrides": []
       },
