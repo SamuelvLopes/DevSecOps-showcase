@@ -220,3 +220,9 @@ tickets:
   depends_on:
   - KORP-013
   - KORP-050
+- id: KORP-056
+  title: Histograma de duração e dashboard RED
+  status: in_review
+  depends_on:
+  - KORP-004
+  - KORP-009
