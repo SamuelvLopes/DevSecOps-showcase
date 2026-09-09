@@ -67,6 +67,18 @@ jobs:
       - name: Run load observability
         run: make compose-load
 
+  demo-evidence:
+    name: Demo evidence
+    runs-on: ubuntu-24.04
+    needs:
+      - compose-smoke
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Run demo evidence
+        run: make demo
+
   compose-recovery:
     name: Compose recovery demo
     runs-on: ubuntu-24.04

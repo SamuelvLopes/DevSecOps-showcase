@@ -196,3 +196,8 @@ tickets:
   depends_on:
   - KORP-006
   - KORP-012
+- id: KORP-052
+  title: Flakiness em demo-evidence e cobertura de CI
+  status: in_review
+  depends_on:
+  - KORP-036
