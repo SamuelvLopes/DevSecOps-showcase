@@ -186,7 +186,7 @@ tickets:
   - KORP-047
 - id: KORP-049
   title: Build e publicação da imagem no GHCR
-  status: in_review
+  status: done
   depends_on:
   - KORP-042
   - KORP-048
@@ -198,17 +198,17 @@ tickets:
   - KORP-012
 - id: KORP-051
   title: README orientado à experiência do avaliador
-  status: in_review
+  status: done
   depends_on:
   - KORP-049
 - id: KORP-052
   title: Flakiness em demo-evidence e cobertura de CI
-  status: in_review
+  status: done
   depends_on:
   - KORP-036
 - id: KORP-053
   title: Release v1.2.0 e sincronização de main
-  status: in_review
+  status: done
   depends_on:
   - KORP-049
   - KORP-050
