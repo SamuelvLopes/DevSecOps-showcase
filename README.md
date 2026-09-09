@@ -3,10 +3,10 @@
 Implementação incremental do desafio técnico Korp: Go, Docker Compose, NGINX,
 Prometheus, Grafana e provisionamento Ansible em Linux.
 
-Status: core Compose validado por CI e publicado na release v1.0.0. A trilha
-Terraform adiciona exemplos executáveis para provisionar VM Ubuntu em AWS ou
-Azure e usar o playbook Ansible em ambiente limpo quando as credenciais do
-provedor estiverem configuradas.
+Status: core Compose/Ansible validado por CI e publicado. A release v1.1.0
+adiciona Terraform para AWS/Azure e uma trilha opcional Kubernetes com Helm e
+observabilidade. Cloud e Kubernetes ficam preparados para execução real quando
+as credenciais e o cluster estiverem configurados.
 
 ## Entrega
 
@@ -20,7 +20,7 @@ executa Compose e valida HTTP, Prometheus e Grafana.
 ## Navegação
 
 - [Requisitos e critérios de aceite](docs/requirements.md)
-- [Release v1.0.0](RELEASE.md)
+- [Releases](RELEASE.md)
 - [Arquitetura e limites](docs/architecture.md)
 - [Threat model STRIDE](docs/threat-model.md)
 - [Security review](docs/security-review.md)
@@ -112,4 +112,9 @@ Pull requests para `develop` e `main` executam CI com testes Go, build Docker e
 validação Compose. Gates de segurança executam `govulncheck` e scan de imagem.
 O smoke Compose valida HTTP, Prometheus e Grafana no fluxo completo. Carga curta
 com k6 e demo de recuperação também rodam em CI.
-Kubernetes e cloud são extensões opcionais e não condicionam a entrega Compose/Ansible. Terraform para AWS e Azure em [`docs/terraform-cloud.md`](docs/terraform-cloud.md) provisiona uma VM Ubuntu para uso com Ansible. A trilha Kubernetes em [`docs/kubernetes-observability.md`](docs/kubernetes-observability.md) adiciona Helm, ServiceMonitor, Loki, Tempo, Alloy e OpenTelemetry.
+Kubernetes e cloud são extensões opcionais e não condicionam a entrega
+Compose/Ansible. Terraform para AWS e Azure em
+[`docs/terraform-cloud.md`](docs/terraform-cloud.md) provisiona uma VM Ubuntu
+para uso com Ansible. A trilha Kubernetes em
+[`docs/kubernetes-observability.md`](docs/kubernetes-observability.md) adiciona
+Helm, ServiceMonitor, Loki, Tempo, Alloy e OpenTelemetry.
