@@ -44,6 +44,13 @@ pública. Detalhes e limites em [`docs/architecture.md`](docs/architecture.md).
 Matriz completa de requisito → arquivo → critério de aceite em
 [`docs/requirements.md`](docs/requirements.md).
 
+O dashboard vai além dos dois sinais obrigatórios e cobre RED — taxa, erros
+e duração — em oito painéis. Os dois exigidos pelo enunciado continuam lá
+com o nome explícito: "Disponibilidade da aplicacao" e "Volume de
+requisicoes". `make compose-smoke` verifica que ambos existem e que **toda**
+query do dashboard aponta para uma métrica realmente exposta pela aplicação,
+para que nenhum painel possa ser publicado vazio.
+
 ## Quick start
 
 Pré-requisitos: Docker, Docker Compose e GNU Make.
@@ -113,6 +120,10 @@ As mesmas verificações rodam em CI a cada pull request, em jobs separados:
   timeouts de servidor e logs estruturados em JSON.
 - **Segurança como gate**: `govulncheck` e scan de imagem bloqueiam a PR;
   threat model STRIDE e security review versionados.
+- **Observabilidade RED**: além de disponibilidade e volume, a aplicação expõe
+  um histograma de duração, o que permite P50/P95/P99 e taxa de erro por classe
+  de status no dashboard. O histograma agrupa por rota e método, sem status,
+  para manter limitado o número de séries de bucket.
 - **Teste de carga e recuperação** automatizados, não só smoke.
 - **Rastreabilidade**: uma branch e uma PR por ticket, com critérios de aceite
   registrados em [`.po/`](.po/README.md) e ADRs para as decisões estruturais.
@@ -176,7 +187,7 @@ desenvolvimento sem alterar o requisito do container.
 | --- | --- |
 | `GET /projeto-korp` | JSON com `nome` e `horario` UTC |
 | `GET /health` | HTTP 204, sem corpo |
-| `GET /metrics` | Exposição Prometheus com `projeto_korp_up` e `projeto_korp_http_requests_total` |
+| `GET /metrics` | Exposição Prometheus: `projeto_korp_up` (gauge), `projeto_korp_http_requests_total` (counter) e `projeto_korp_http_request_duration_seconds` (histogram) |
 
 ## Documentação
 
