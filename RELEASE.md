@@ -6,8 +6,11 @@ Release patch documental e de confiabilidade do gate de segurança:
 
 - README ganha seção sobre ciclo DevOps com evidências por etapa;
 - README cita referências ISO/IEC 27001:2022, 27002:2022, 27005:2022 e 20000-1:2018 sem declarar certificação;
-- workflow de segurança fixa `TRIVY_DB_REPOSITORY=ghcr.io/aquasecurity/trivy-db` para evitar falhas no mirror da base do Trivy.
-- README aponta para GitHub Releases em vez de manter uma versão fixa no texto introdutório.
+- workflow de segurança fixa `TRIVY_DB_REPOSITORY=ghcr.io/aquasecurity/trivy-db` para evitar falhas no mirror da base do Trivy;
+- README aponta para GitHub Releases em vez de manter uma versão fixa no texto introdutório;
+- README destaca `make ansible-clean-room-test` como validação completa;
+- README mantém `curl http://localhost:80/projeto-korp` como teste funcional do enunciado;
+- evidência visual do Grafana usa URL raw para renderização estável.
 
 ## Validação
 
