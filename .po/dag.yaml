@@ -216,7 +216,7 @@ tickets:
   - KORP-052
 - id: KORP-055
   title: Clean-room Ansible com Ubuntu em Docker/DinD
-  status: planned
+  status: in_review
   depends_on:
   - KORP-013
   - KORP-050
