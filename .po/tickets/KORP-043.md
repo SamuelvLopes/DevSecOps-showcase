@@ -1,6 +1,6 @@
 # KORP-043 — Release v1.0.1 Terraform cloud VM
 
-Status: in_review. Risco: baixo. Depende de KORP-041.
+Status: done. Risco: baixo. Depende de KORP-041.
 
 ## Objetivo
 
@@ -21,8 +21,8 @@ Kubernetes LGTM.
 - [x] Release notes v1.0.1 versionadas.
 - [x] KORP-040 marcado como concluído.
 - [x] KORP-041 incluído no escopo de release.
-- [ ] PR de release aberta para `main`.
-- [ ] GitHub Actions verdes na PR de release.
+- [x] PR de release aberta para `main`.
+- [x] GitHub Actions verdes na PR de release.
 - [ ] Tag `v1.0.1` publicada.
 
 ## Segurança, observabilidade e recuperação
@@ -34,4 +34,5 @@ operador e deve terminar com `terraform destroy` para evitar custo recorrente.
 
 - `terraform fmt` e `terraform validate` passaram para AWS/Azure em container e
   no CI dos PRs anteriores.
-- Evidências finais serão registradas após PR de release e tag.
+- PR #34 de release para `main` passou nos checks e foi integrada.
+- Tag `v1.0.1` será criada após este fechamento do ticket.
