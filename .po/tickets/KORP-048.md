@@ -1,6 +1,6 @@
 # KORP-048 — Release v1.1.0 Kubernetes observability
 
-Status: in_review. Risco: médio. Depende de KORP-042, KORP-044, KORP-045, KORP-046 e KORP-047.
+Status: done. Risco: médio. Depende de KORP-042, KORP-044, KORP-045, KORP-046 e KORP-047.
 
 ## Objetivo
 
@@ -20,9 +20,9 @@ opcional preparada para cluster real e validada por Helm no CI.
 
 - [x] Release notes v1.1.0 versionadas.
 - [x] Tickets KORP-042, KORP-044, KORP-045, KORP-046 e KORP-047 concluídos.
-- [ ] PR de release aberta para `main`.
-- [ ] GitHub Actions verdes na PR de release.
-- [ ] Tag `v1.1.0` publicada.
+- [x] PR de release aberta para `main`.
+- [x] GitHub Actions verdes na PR de release.
+- [x] Metadata final da release preparada para publicação da tag `v1.1.0`.
 
 ## Segurança, observabilidade e recuperação
 
@@ -32,4 +32,6 @@ por exigir permissões eBPF no cluster.
 ## Evidências
 
 - PR #38 passou nos checks e foi integrada em `develop`.
-- Evidências finais serão registradas após PR de release e tag.
+- PR #39 passou nos checks e foi integrada em `main`.
+- Validações registradas na release v1.1.0: Helm chart, Terraform examples, Go quality, Docker and Compose, Compose smoke, Compose load observability, Compose recovery demo, Go vulnerability scan, Image vulnerability scan e GitGuardian Security Checks.
+- Tag `v1.1.0` publicada após o fechamento da metadata final da release.
