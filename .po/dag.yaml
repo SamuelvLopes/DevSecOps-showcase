@@ -152,6 +152,6 @@ tickets:
   - KORP-041
 - id: KORP-043
   title: Release v1.0.1 Terraform cloud VM
-  status: in_review
+  status: done
   depends_on:
   - KORP-041
