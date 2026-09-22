@@ -61,7 +61,7 @@ jobs:
             org.opencontainers.image.description=Ubuntu 24.04 target for disposable Ansible/DinD validation
 
       - name: Build clean-room image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: ./tests/clean-room
           file: ./tests/clean-room/Dockerfile
